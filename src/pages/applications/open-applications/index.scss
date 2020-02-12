@@ -1,0 +1,27 @@
+@import "../../../sass/theme/theme";
+
+.new_job_application {
+  display: flex;
+  align-items: center;
+  margin: 2rem;
+  width: max-content;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: $secondary;
+
+  &:hover {
+    color: $primary;
+    border: 1px solid $primary;
+    border-radius: 50px;
+  }
+}
+
+.new_job_application__label {
+  padding: 0 0.5rem;
+}
+
+.applications__empty-state {
+  padding: 0 0 1rem 1.5rem;
+  font-size: 1rem;
+  color: $primary;
+}

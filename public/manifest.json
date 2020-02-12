@@ -1,0 +1,9 @@
+{
+  "short_name": "reshaped",
+  "name": "find your dream job",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

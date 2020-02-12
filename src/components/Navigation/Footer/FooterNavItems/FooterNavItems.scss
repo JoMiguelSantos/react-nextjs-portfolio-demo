@@ -1,0 +1,53 @@
+@import "../../../../sass/theme/theme";
+@import "../../../../pages/styles.scss";
+
+.social-media {
+  padding: 0.5rem 0.5rem;
+  margin-left: 0.5rem;
+  width: max-content;
+}
+@media only screen and (max-width: $bp-medium) {
+  .social-media {
+    padding: 0.3rem;
+    margin: 0;
+  }
+}
+@media only screen and (max-width: $bp-smallest) {
+  .social-media {
+    padding: 0.2rem 0;
+  }
+}
+
+.copyright {
+  justify-self: center;
+  margin: 1rem 0.5rem;
+}
+@media only screen and (max-width: $bp-smallest) {
+  .copyright {
+    display: none;
+  }
+}
+
+.icon--facebook {
+  color: $secondary-light;
+
+  &:hover {
+    color: #3b5998;
+  }
+}
+
+.icon--linkedin {
+  color: $secondary-light;
+
+  &:hover {
+    color: #0e76a8;
+  }
+}
+
+.icon--twitter {
+  color: $secondary-light;
+
+  &:hover {
+    color: #38a1f3;
+  }
+}

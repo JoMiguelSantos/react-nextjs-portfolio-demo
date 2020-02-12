@@ -1,0 +1,95 @@
+@import "../../../../sass/theme/theme";
+@import "../../../../pages/styles.scss";
+
+.navmenu__horizontal--items {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-evenly;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s;
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      justify-items: start;
+      justify-content: start;
+    }
+  }
+}
+
+.navmenu__horizontal--items:hover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  opacity: 1;
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      justify-items: start;
+      justify-content: start;
+    }
+  }
+}
+
+.navmenu__content--items.inactive:hover .navmenu__horizontal--items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s;
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      justify-items: start;
+      justify-content: start;
+    }
+  }
+}
+
+.navmenu__content--items.inactive:hover .navmenu__content--icon {
+  color: $primary;
+}
+
+.navmenu__content--base.icon:hover {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navmenu__content--base {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+
+  & > p {
+    margin: 0;
+    margin-bottom: 0.1rem;
+    color: $primary;
+    font-size: 0.4rem;
+  }
+}
+
+.navmenu__content--items {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  height: 4rem;
+  transition: all 1s;
+}
+
+.navmenu__content--icon.active,
+.navmenu__content--icon.inactive {
+  color: $secondary;
+  display: flex;
+  font-size: 3rem;
+  padding-top: 0.3rem;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &:hover {
+    color: $primary;
+  }
+}

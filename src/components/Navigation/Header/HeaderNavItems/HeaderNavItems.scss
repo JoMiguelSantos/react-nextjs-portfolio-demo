@@ -1,0 +1,26 @@
+@import "../../../../sass/theme/theme";
+
+.header__navigation--items {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 1rem;
+}
+
+.icon--account {
+  color: $primary;
+  padding: 0 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary;
+    color: $neutral;
+    border-radius: 3px;
+    box-shadow: 3px 3px 15px $primary-light;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

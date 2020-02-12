@@ -1,0 +1,12 @@
+@import "../../../sass/theme/theme";
+
+.footer {
+  grid-row: footer-start / footer-end;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  justify-content: space-around;
+  background-color: $secondary-dark;
+  width: 100%;
+  margin-top: 1rem;
+}

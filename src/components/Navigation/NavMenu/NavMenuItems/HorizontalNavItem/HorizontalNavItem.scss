@@ -1,0 +1,50 @@
+@import "../../../../../sass/theme/theme";
+@import "../../../../../pages/styles.scss";
+
+.navmenu__content--item {
+  width: max-content;
+  padding: 1.5rem 1.2rem;
+  font-size: 1rem;
+  color: $secondary;
+  text-decoration: none;
+  text-align: center;
+
+  &:hover {
+    color: $primary;
+  }
+}
+@media only screen and (max-width: $bp-largest) {
+  .navmenu__content--item {
+    padding: 1.5 0.9rem;
+  }
+}
+@media only screen and (max-width: $bp-large) {
+  .navmenu__content--item {
+    padding: 1.5 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+@media only screen and (max-width: $bp-medium) {
+  .navmenu__content--item {
+    padding: 1.5rem 0.3rem;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: $bp-small) {
+  .navmenu__content--item {
+    width: max-content;
+  }
+}
+@media only screen and (max-width: $bp-smaller) {
+  .navmenu__content--item {
+    max-width: 4rem;
+    padding: 1.5rem 0.5rem;
+  }
+}
+@media only screen and (max-width: $bp-smallest) {
+  .navmenu__content--item {
+    max-width: min-content;
+    font-size: 0.5rem;
+    padding: 1.5rem 0.2rem;
+  }
+}

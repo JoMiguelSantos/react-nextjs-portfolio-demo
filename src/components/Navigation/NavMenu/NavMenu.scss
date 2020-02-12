@@ -1,0 +1,70 @@
+@import "../../../sass/theme/theme";
+@import "../../../pages/styles.scss";
+
+.navmenu {
+  width: 100vw;
+  grid-row: navmenu-start / navmenu-end;
+  padding-left: 2rem;
+}
+@supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
+  .navmenu {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+}
+@media only screen and (max-width: $bp-medium) {
+  .navmenu {
+    padding: 0 0.5rem;
+  }
+}
+
+.navmenu__content {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  transition: all 1s;
+}
+
+.navmenu__content:hover {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+  opacity: 1;
+}
+
+#active-section {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+
+  & > .navmenu__horizontal--items {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media only screen and (max-width: $bp-smallest) {
+    & > .navmenu__horizontal--items {
+      justify-items: start;
+      justify-content: start;
+    }
+  }
+}
+
+#active-page {
+  color: $primary;
+}
+
+#active-icon {
+  color: $primary;
+}
+
+#active-section:hover + .navmenu__content {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+  opacity: 1;
+}

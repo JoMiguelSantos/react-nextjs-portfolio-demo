@@ -1,0 +1,48 @@
+@import "../sass/theme/theme";
+@import "../pages/styles.scss";
+
+#__next {
+}
+
+.layout {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows:
+    [header-start] max-content
+    [header-end content-start] 1fr
+    [content-end footer-start] minmax(min-content, max-content)
+    [footer-end];
+  grid-template-columns: 1fr;
+}
+
+#content {
+  padding-top: 2rem;
+}
+
+#navigation {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+#navigation + div {
+  margin-top: 6rem;
+}
+@media only screen and (max-width: $bp-small) {
+  #navigation + div {
+    margin-top: 7rem;
+  }
+}
+
+#navigation + div {
+  transition: all 0.7s;
+}
+
+// this blurs the background content
+#navigation:hover + div {
+  filter: blur(20px);
+}
+
+.footer {
+  grid-row: footer-start / footer-end;
+}

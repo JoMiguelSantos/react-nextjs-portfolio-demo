@@ -1,0 +1,43 @@
+@import "./theme/colors";
+
+@mixin loading-spinner(
+  $activeColor: $primary,
+  $borderColor: $secondary,
+  $selector: "&::after",
+  $time: 1s
+) {
+  // Animation Keyframes
+  @keyframes spinner {
+    0% {
+      transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+  }
+  position: relative;
+
+  // Styles to fade out spinner when loaded
+  &.loaded {
+    opacity: 0;
+    transition: opacity linear 0.2s;
+  }
+
+  // Spinner
+  #{$selector} {
+    animation: $time linear infinite spinner;
+    border: solid 3px #{$borderColor};
+    border-bottom-color: #{$activeColor};
+    border-radius: 50%;
+    content: "";
+    height: 3rem;
+    left: 50%;
+    opacity: inherit;
+    position: absolute;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: center;
+    width: 3rem;
+    will-change: transform;
+  }
+}

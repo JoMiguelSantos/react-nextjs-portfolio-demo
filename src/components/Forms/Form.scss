@@ -1,0 +1,74 @@
+@import "../../sass/theme/theme";
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  margin-left: 2rem;
+}
+
+.form__box {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5rem;
+  margin-left: 0;
+  color: $primary-light;
+  font-size: 0.8rem;
+  text-align: center;
+
+  & > * {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.form__input {
+}
+
+.form__text-area {
+}
+
+.form__error--message {
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary-dark;
+}
+
+.form__error--icon {
+}
+
+.form__btn--submit,
+.form__btn--cancel {
+  height: min-content;
+  margin-top: 0.7rem;
+  align-self: flex-start;
+  border-radius: 5px;
+  transition: transform 0.2s;
+  padding: 0.3rem 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary;
+    color: $neutral;
+    border-radius: 3px;
+    box-shadow: 3px 3px 15px $primary-light;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.form__btn--submit {
+  background-image: linear-gradient(to right bottom, $primary-light, $neutral);
+}
+// need to improve styling. Create proper button setup
+// in order to be consistent across pages in terms of
+// button hierarchy and colors
+.form__btn--cancel {
+  border: 1px solid $primary-transparent;
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: content-box;
+}

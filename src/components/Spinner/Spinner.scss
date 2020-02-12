@@ -1,0 +1,25 @@
+@import "../../sass/theme/colors";
+@import "../../sass/mixins";
+
+.spinner {
+  display: flex;
+  //   justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  @include loading-spinner;
+  height: 3rem;
+  padding: 2rem;
+}
+
+.loading-spinner-copy {
+  font-size: 0.8rem;
+
+  &.loaded {
+    opacity: 0;
+    transition: opacity linear 0.2s;
+  }
+}

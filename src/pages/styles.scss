@@ -1,0 +1,32 @@
+@import "../sass/theme/theme";
+
+* {
+  box-sizing: inherit;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  width: 100%;
+  color: $secondary;
+}
+
+body {
+  font-size: 62.5%;
+  margin: 0;
+  padding: 0;
+  font-family: $core-font, "Arial";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+}
+
+$bp-largest: 70em; // 1200px
+$bp-large: 67em; // 1100px
+$bp-medium: 60em; // 930px
+$bp-small: 50em; // 857px
+$bp-smaller: 43em; // 500px
+$bp-smallest: 35em; // 500px
