@@ -1,5 +1,6 @@
 @import "./theme/colors";
 
+// adapted from https://codeburst.io/how-to-create-a-simple-css-loading-spinner-make-it-accessible-e5c83c2e464c
 @mixin loading-spinner(
   $activeColor: $primary,
   $borderColor: $secondary,
