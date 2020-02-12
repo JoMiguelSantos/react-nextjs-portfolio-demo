@@ -15,7 +15,6 @@ const Header = props => {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
       const scrollDistance = scrollY - oldScroll;
-      console.log(scrollY);
       if (
         // if going up then make header visible
         scrollY < oldScroll ||
@@ -24,10 +23,8 @@ const Header = props => {
         // if scrolling on the top then header visible
         scrollY < 70
       ) {
-        console.log("show");
         setVisible(true);
       } else {
-        console.log("hide");
         setVisible(false);
       }
       setOldScroll(scrollY);
