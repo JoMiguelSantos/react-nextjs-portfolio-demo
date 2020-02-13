@@ -15,8 +15,8 @@ const checkStatus = response => {
 export const getApplications = async entryId => {
   // if entryId is passed then get specific application else get all applications
   const apiUrl = entryId
-    ? `http://localhost:3000/api/db/applications?application=${entryId}}`
-    : `http://localhost:3000/api/db/applications`;
+    ? `https://reshaped-demo.now.sh/api/db/applications?application=${entryId}}`
+    : `https://reshaped-demo.now.sh/api/db/applications`;
   const result = await fetch(apiUrl)
     .then(checkStatus)
     .then(r => r.json());
@@ -28,7 +28,7 @@ export const getApplicationSteps = async (entryId, formId) => {
   // if entryId is passed then get specific application else get all applications
   const apiUrl =
     entryId && formId
-      ? `http://localhost:3000/api/db/applications/steps?entryId=${entryId}&formId=${formId}}`
+      ? `https://reshaped-demo.now.sh/api/db/applications/steps?entryId=${entryId}&formId=${formId}}`
       : "";
   const result = await fetch(apiUrl)
     .then(checkStatus)
@@ -39,13 +39,16 @@ export const getApplicationSteps = async (entryId, formId) => {
 
 // UPSERT
 export const upsertApplication = async data => {
-  const result = await fetch(`http://localhost:3000/api/db/applications`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ application: data })
-  })
+  const result = await fetch(
+    `https://reshaped-demo.now.sh/api/db/applications`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ application: data })
+    }
+  )
     .then(checkStatus)
     .then(r => {
       return r.json();
@@ -56,7 +59,7 @@ export const upsertApplication = async data => {
 
 export const upsertApplicationStep = async (step, entryId, formId) => {
   const result = await fetch(
-    `http://localhost:3000/api/db/applications/steps`,
+    `https://reshaped-demo.now.sh/api/db/applications/steps`,
     {
       method: "POST",
       headers: {
@@ -77,13 +80,16 @@ export const upsertApplicationStep = async (step, entryId, formId) => {
 
 //DELETE
 export const deleteApplication = async entryId => {
-  const result = await fetch(`http://localhost:3000/api/db/applications`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ application: { entryId } })
-  })
+  const result = await fetch(
+    `https://reshaped-demo.now.sh/api/db/applications`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ application: { entryId } })
+    }
+  )
     .then(checkStatus)
     .then(r => console.log("successfully deleted " + r.text()));
 
@@ -92,7 +98,7 @@ export const deleteApplication = async entryId => {
 
 export const deleteApplicationStep = async (entryId, formId) => {
   const result = await fetch(
-    `http://localhost:3000/api/db/applications/steps`,
+    `https://reshaped-demo.now.sh/api/db/applications/steps`,
     {
       method: "DELETE",
       headers: {
