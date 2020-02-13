@@ -22,12 +22,12 @@
   align-items: center;
   margin-right: 0.8rem;
   label {
-    color: $primary-light;
+    color: $primary-dark-light;
   }
 
   p {
     padding: 0 0.5rem;
-    color: $primary-dark;
+    color: $primary-dark-dark;
     max-width: 75vw;
     min-width: min-content;
     white-space: nowrap;
@@ -41,7 +41,7 @@
   align-items: center;
 
   & > *:hover {
-    color: $primary;
+    color: $primary-dark;
     cursor: pointer;
   }
 }

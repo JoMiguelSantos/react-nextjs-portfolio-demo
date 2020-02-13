@@ -10,8 +10,8 @@
   color: $secondary;
 
   &:hover {
-    color: $primary;
-    border: 1px solid $primary;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
     border-radius: 50px;
   }
 }

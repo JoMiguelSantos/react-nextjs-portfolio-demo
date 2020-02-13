@@ -2,7 +2,7 @@
 
 // adapted from https://codeburst.io/how-to-create-a-simple-css-loading-spinner-make-it-accessible-e5c83c2e464c
 @mixin loading-spinner(
-  $activeColor: $primary,
+  $activeColor: $primary-dark,
   $borderColor: $secondary,
   $selector: "&::after",
   $time: 1s

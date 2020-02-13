@@ -50,7 +50,7 @@
 }
 
 .navmenu__content--items.inactive:hover .navmenu__content--icon {
-  color: $primary;
+  color: $primary-dark;
 }
 
 .navmenu__content--base.icon:hover {
@@ -67,7 +67,7 @@
   & > p {
     margin: 0;
     margin-bottom: 0.1rem;
-    color: $primary;
+    color: $primary-dark;
     font-size: 0.4rem;
   }
 }
@@ -90,6 +90,6 @@
   transition: all 0.5s;
 
   &:hover {
-    color: $primary;
+    color: $primary-dark;
   }
 }

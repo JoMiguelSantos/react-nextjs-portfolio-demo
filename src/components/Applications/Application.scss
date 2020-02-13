@@ -67,8 +67,8 @@
   &.active {
     display: flex;
     position: relative;
-    color: $primary;
-    border: 1px solid $primary;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
     border-radius: 50px;
   }
 }
@@ -141,7 +141,11 @@
 }
 
 .application__header {
-  background-image: linear-gradient(to right bottom, $primary-light, $neutral);
+  background-image: linear-gradient(
+    to right bottom,
+    $primary-dark-light,
+    $neutral
+  );
   border-radius: 5px;
   padding: 0.6rem 1rem;
   color: $secondary-dark;
@@ -193,8 +197,8 @@
   // transition: all 0.3s;
 
   &:hover {
-    color: $primary;
-    border: 1px solid $primary;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
     border-radius: 50px;
   }
 }
@@ -225,7 +229,7 @@
   &:hover {
     background-image: linear-gradient(
       to right bottom,
-      $primary-light,
+      $primary-dark-light,
       $neutral
     );
     border-radius: 50px;

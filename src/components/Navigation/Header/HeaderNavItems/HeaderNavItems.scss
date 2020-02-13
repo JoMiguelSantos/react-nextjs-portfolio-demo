@@ -8,15 +8,15 @@
 }
 
 .icon--account {
-  color: $primary;
+  color: $primary-dark;
   padding: 0 1rem;
   cursor: pointer;
 
   &:hover {
-    background: $primary;
+    background: $primary-dark;
     color: $neutral;
     border-radius: 3px;
-    box-shadow: 3px 3px 15px $primary-light;
+    box-shadow: 3px 3px 15px $primary-dark-light;
     transform: translateY(-3px);
   }
 

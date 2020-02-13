@@ -10,8 +10,8 @@
   color: $secondary;
 
   &:hover {
-    color: $primary;
-    border: 1px solid $primary;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
     border-radius: 50px;
   }
 }
@@ -23,5 +23,5 @@
 .applications__empty-state {
   padding: 0 0 1rem 1.5rem;
   font-size: 1rem;
-  color: $primary;
+  color: $primary-dark;
 }
