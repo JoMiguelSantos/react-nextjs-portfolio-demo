@@ -1,0 +1,27 @@
+@import "../sass/theme/theme";
+
+.demo {
+  color: $primary-dark;
+  font-size: 1rem;
+  padding: 2rem;
+
+  & span {
+    color: $secondary;
+  }
+
+  & p {
+    display: inline;
+  }
+}
+
+.icons {
+  display: inline;
+
+  & > a {
+    color: $secondary-dark;
+
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+}

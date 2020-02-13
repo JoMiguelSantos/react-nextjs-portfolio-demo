@@ -6,6 +6,8 @@ import MailIcon from "@material-ui/icons/Mail";
 
 import { useFetchUser } from "../lib/auth/user";
 
+import "./index.scss";
+
 const index = () => {
   const { user, loading } = useFetchUser();
 
@@ -19,10 +21,7 @@ const index = () => {
       <p>
         {" "}
         The idea for this demo is to showcase a fully operational{" "}
-        <span style={{ color: "#83b0d8" }}>
-          CRUD Single Page Application
-        </span>{" "}
-        using{" "}
+        <span>CRUD Single Page Application</span> using{" "}
         <a href="https://reactjs.org/" target="_blank">
           React
         </a>{" "}
@@ -30,21 +29,17 @@ const index = () => {
         <a href="https://nextjs.org/" target="_blank">
           NextJS
         </a>{" "}
-        to harness the power of{" "}
-        <span style={{ color: "#83b0d8" }}>Server Side Rendering</span> and code
+        to harness the power of <span>Server Side Rendering</span> and code
         splitting optimization.
       </p>
       <p>
         {" "}
-        This Web App uses{" "}
-        <span style={{ color: "#83b0d8" }}>MongoDB as database,</span> provided
-        by{" "}
+        This Web App uses <span>MongoDB as database,</span> provided by{" "}
         <a href="https://www.mongodb.com/cloud/atlas" target="_blank">
           MongoDB Atlas
         </a>{" "}
         and makes use of the NextJS internal server to handle all requests and
-        also features <span style={{ color: "#83b0d8" }}>Authentication</span>{" "}
-        provided by{" "}
+        also features <span>Authentication</span> provided by{" "}
         <a href="https://auth0.com/" target="_blank">
           Auth0
         </a>
@@ -52,12 +47,11 @@ const index = () => {
       </p>
       <p>
         {" "}
-        <span style={{ color: "#83b0d8" }}>State management</span> is done using{" "}
+        <span>State management</span> is done using{" "}
         <a href="https://redux.js.org/" target="_blank">
           Redux
         </a>{" "}
-        and <span style={{ color: "#83b0d8" }}>CSS styles</span> are performed
-        using{" "}
+        and <span>CSS styles</span> are performed using{" "}
         <a href="https://sass-lang.com/" target="_blank">
           SASS
         </a>
@@ -87,30 +81,25 @@ const index = () => {
       <p>
         I hope you enjoyed the web application and feel free to contact me
         through{" "}
+      </p>
+      <div className="icons">
         <a
           href="https://www.linkedin.com/in/joaomiguelopesantos/"
           target="_blank"
         >
-          <LinkedInIcon fontSize="small" />
-        </a>
-        ,{" "}
-        <a href="https://github.com/JoMiguelSantos" target="_blank">
-          <GitHubIcon fontSize="small" />
+          <LinkedInIcon fontSize="medium" />
         </a>{" "}
-        or{" "}
+        <a href="https://github.com/JoMiguelSantos" target="_blank">
+          <GitHubIcon fontSize="medium" />
+        </a>{" "}
         <a href="mailto:joaomsglds@gmail.com" target="_top">
-          <MailIcon fontSize="small" />
+          <MailIcon fontSize="medium" />
         </a>
-      </p>
+      </div>
     </React.Fragment>
   );
   const content = (
-    <div
-      className="demo"
-      style={{ color: "#f68616", "font-size": "1rem", padding: "2rem" }}
-    >
-      {!user ? initialScreen : instructions}
-    </div>
+    <div className="demo">{!user ? initialScreen : instructions}</div>
   );
 
   return (

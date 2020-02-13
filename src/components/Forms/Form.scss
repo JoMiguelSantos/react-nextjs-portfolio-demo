@@ -12,7 +12,7 @@
   flex-direction: column;
   margin-right: 0.5rem;
   margin-left: 0;
-  color: $primary-dark-light;
+  color: $primary-light;
   font-size: 0.8rem;
   text-align: center;
 
@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $primary-dark-dark;
+  color: $primary-dark;
 }
 
 .form__error--icon {
@@ -52,7 +52,7 @@
     background: $primary-dark;
     color: $neutral;
     border-radius: 3px;
-    box-shadow: 3px 3px 15px $primary-dark-light;
+    box-shadow: 3px 3px 15px $primary-light;
     transform: translateY(-3px);
   }
 
@@ -62,13 +62,13 @@
 }
 
 .form__btn--submit {
-  background-image: linear-gradient(to right bottom, $primary-dark-light, $neutral);
+  background-image: linear-gradient(to right bottom, $primary-light, $neutral);
 }
 // need to improve styling. Create proper button setup
 // in order to be consistent across pages in terms of
 // button hierarchy and colors
 .form__btn--cancel {
-  border: 1px solid $primary-dark-transparent;
+  border: 1px solid $primary-transparent;
   background-color: rgba(0, 0, 0, 0);
   box-sizing: content-box;
 }

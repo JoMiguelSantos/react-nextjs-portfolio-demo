@@ -141,11 +141,7 @@
 }
 
 .application__header {
-  background-image: linear-gradient(
-    to right bottom,
-    $primary-dark-light,
-    $neutral
-  );
+  background-image: linear-gradient(to right bottom, $primary-light, $neutral);
   border-radius: 5px;
   padding: 0.6rem 1rem;
   color: $secondary-dark;
@@ -229,7 +225,7 @@
   &:hover {
     background-image: linear-gradient(
       to right bottom,
-      $primary-dark-light,
+      $primary-light,
       $neutral
     );
     border-radius: 50px;
