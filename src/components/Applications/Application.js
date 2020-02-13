@@ -122,7 +122,10 @@ const Application = props => {
         steps: [applicationStepData]
       };
       await upsertApplication(applicationData);
-      props.dispatch(editApplicationEntry(applicationData));
+      batch(() => {
+        props.dispatch(activeStep({ [entryId]: formId }));
+        props.dispatch(editApplicationEntry(applicationData));
+      });
     } else {
       await upsertApplicationStep(formData, entryId, formId);
       // add step to application in applications collection in DB using the entryId
@@ -150,6 +153,7 @@ const Application = props => {
     />
   );
 
+  // EDIT STEPS MENU
   const onEditStepFormSubmit = async (formData, entryId, formId) => {
     if (formId === "application-submitted") {
       let applicationStepData = {
