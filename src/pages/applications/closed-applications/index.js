@@ -37,7 +37,15 @@ const ClosedApplications = props => {
     return;
   }, []);
 
-  const content = <React.Fragment>{applicationEntries}</React.Fragment>;
+  const content = (
+    <React.Fragment>
+      {applicationEntries ? (
+        applicationEntries
+      ) : (
+        <p>You currently have no closed applications</p>
+      )}
+    </React.Fragment>
+  );
 
   return (
     <Layout user={user} loading={loading}>
