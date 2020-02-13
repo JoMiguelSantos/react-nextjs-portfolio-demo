@@ -43,7 +43,6 @@ export default auth0.requireAuthentication(async (req, res) => {
   // connect to db
   await connectToDB();
 
-  console.log(application);
   switch (method) {
     case "GET":
       console.log("getting");
