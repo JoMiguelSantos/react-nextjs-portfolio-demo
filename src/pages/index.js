@@ -1,5 +1,9 @@
 import Layout from "../layout/Layout";
 
+import GitHubIcon from "@material-ui/icons/GitHub";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import MailIcon from "@material-ui/icons/Mail";
+
 import { useFetchUser } from "../lib/auth/user";
 
 const index = () => {
@@ -87,15 +91,15 @@ const index = () => {
           href="https://www.linkedin.com/in/joaomiguelopesantos/"
           target="_blank"
         >
-          LinkedIn
+          <LinkedInIcon fontSize="small" />
         </a>
         ,{" "}
         <a href="https://github.com/JoMiguelSantos" target="_blank">
-          GitHub
+          <GitHubIcon fontSize="small" />
         </a>{" "}
         or{" "}
         <a href="mailto:joaomsglds@gmail.com" target="_top">
-          Email
+          <MailIcon fontSize="small" />
         </a>
       </p>
     </React.Fragment>
