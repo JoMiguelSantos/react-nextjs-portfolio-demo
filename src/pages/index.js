@@ -1,4 +1,5 @@
 import Layout from "../layout/Layout";
+import Link from "next/link";
 
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
@@ -95,6 +96,11 @@ const index = () => {
         <a href="mailto:joaomsglds@gmail.com" target="_top">
           <MailIcon fontSize="medium" />
         </a>
+      </div>
+      <div className="link-back">
+        <Link href="/applications">
+          <a className="back-to-applications">Back to Applications</a>
+        </Link>
       </div>
     </React.Fragment>
   );

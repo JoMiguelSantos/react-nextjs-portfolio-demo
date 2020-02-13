@@ -25,3 +25,34 @@
     }
   }
 }
+
+.link-back {
+  padding: 2rem 0;
+}
+.back-to-applications {
+  font-size: 1rem;
+  display: block;
+  border: 3px solid $primary-dark;
+
+  &:link,
+  &:visited {
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+    color: $primary-dark;
+    letter-spacing: 0.15rem;
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  &:hover {
+    background: $primary-dark;
+    color: $neutral;
+    border-radius: 3px;
+    box-shadow: 3px 3px 15px $primary-light;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
