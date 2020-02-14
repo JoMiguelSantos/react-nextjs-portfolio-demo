@@ -6,11 +6,13 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
 
 import { useFetchUser } from "../lib/auth/user";
+import { useState } from "react";
 
 import "./index.scss";
 
 const index = () => {
   const { user, loading } = useFetchUser();
+  const [isShow, setShow] = useState(false);
 
   const initialScreen = (
     <React.Fragment>
@@ -101,6 +103,16 @@ const index = () => {
         <Link href="/applications">
           <a className="back-to-applications">Back to Applications</a>
         </Link>
+      </div>
+      <div className="peekaboo">
+        <button
+          className="show-initial-screen"
+          onClick={() => setShow(!isShow)}
+        >
+          {" "}
+          {!isShow ? `Show Initial Screen Text` : `Hide Initial Screen Text`}
+        </button>
+        {isShow && initialScreen}
       </div>
     </React.Fragment>
   );

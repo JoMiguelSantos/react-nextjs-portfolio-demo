@@ -29,10 +29,12 @@
 .link-back {
   padding: 2rem 0;
 }
-.back-to-applications {
+.back-to-applications,
+.show-initial-screen {
   font-size: 1rem;
-  display: block;
   border: 3px solid $primary-dark;
+  width: max-content;
+  color: $primary-dark;
 
   &:link,
   &:visited {
@@ -55,4 +57,10 @@
   &:active {
     transform: translateY(0);
   }
+}
+
+.peekaboo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
