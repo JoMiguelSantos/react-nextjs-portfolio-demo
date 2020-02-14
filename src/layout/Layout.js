@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "../components/Navigation/Header/Header";
 import Footer from "../components/Navigation/Footer/Footer";
 import NavMenu from "../components/Navigation/NavMenu/NavMenu";
-
+import Spinner from "../components/Spinner/Spinner";
 import "./Layout.scss";
 
 const Layout = ({ user, loading = false, children }) => {
@@ -21,7 +21,7 @@ const Layout = ({ user, loading = false, children }) => {
         <Header user={user} loading={loading} />
         <NavMenu user={user} loading={loading} />
       </div>
-      <div id="content">{children}</div>
+      {loading ? <Spinner /> : <div id="content">{children}</div>}
       <Footer user={user} loading={loading} />
     </div>
   );
