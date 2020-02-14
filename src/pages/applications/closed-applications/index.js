@@ -8,6 +8,7 @@ import { getApplications } from "../../../database/applications";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useFetchUser } from "../../../lib/auth/user";
+import withAuth from "../../../container/Auth/withAuth";
 
 import "./index.scss";
 
@@ -73,4 +74,4 @@ ClosedApplications.getInitialProps = async ({ store, isServer }) => {
   return store;
 };
 
-export default connect(mapStateToProps, null)(ClosedApplications);
+export default connect(mapStateToProps, null)(withAuth(ClosedApplications));

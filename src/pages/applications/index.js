@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 import { populateApplicationsState } from "../../store/actions/main";
 import { getApplications } from "../../database/applications";
+import withAuth from "../../container/Auth/withAuth";
 
 import "./index.scss";
 
@@ -89,4 +90,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Applications);
+export default connect(mapStateToProps, null)(withAuth(Applications));

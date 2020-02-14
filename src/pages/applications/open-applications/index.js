@@ -19,6 +19,7 @@ import auth0 from "../../../lib/auth/auth0";
 import { connect, batch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useFetchUser } from "../../../lib/auth/user";
+import withAuth from "../../../container/Auth/withAuth";
 
 import "./index.scss";
 
@@ -148,4 +149,4 @@ OpenApplications.getInitialProps = async ({ store, isServer }) => {
   return store;
 };
 
-export default connect(mapStateToProps, null)(OpenApplications);
+export default connect(mapStateToProps, null)(withAuth(OpenApplications));
