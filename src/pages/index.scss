@@ -2,6 +2,7 @@
 
 .demo {
   color: $primary-dark;
+  line-height: 2;
   font-size: 1rem;
   padding: 2rem;
 
@@ -11,6 +12,7 @@
 
   & p {
     display: inline;
+    line-height: 2;
   }
 }
 
