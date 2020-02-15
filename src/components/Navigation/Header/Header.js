@@ -51,7 +51,7 @@ const Header = props => {
   }
 
   return (
-    <header className={`header ${!isVisible && `header--hidden`}`}>
+    <header id="header" className={`header ${!isVisible && `header--hidden`}`}>
       <Logo />
       <nav>
         <HeaderNavItems user={props.user} loading={props.loading} />

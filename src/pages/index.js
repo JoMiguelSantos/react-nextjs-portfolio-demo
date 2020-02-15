@@ -68,7 +68,8 @@ const index = () => {
         {" "}
         Even though the App is responsive to the different screen sizes, this
         App is not optimized for Mobile so bear that in mind if the experience
-        is sub par.
+        is sub par. A Desktop first approach has been applied when building the
+        responsiveness.
       </p>
       <p>
         Please Signup/Login to continue this demo and for further instructions.

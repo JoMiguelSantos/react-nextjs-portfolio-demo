@@ -1,5 +1,5 @@
 @import "../../sass/theme/theme";
-@import "../../pages/styles.scss";
+@import "../../sass/mediaQueries";
 
 .application {
   min-height: 6rem;
@@ -19,8 +19,9 @@
 
 .application__steps--container {
   display: flex;
+  height: 3rem;
   align-items: center;
-  padding: 1rem 1rem 0 2rem;
+  padding: 2rem 1rem 0 2rem;
 
   & > * {
     margin: 0.5rem 0;
@@ -204,11 +205,21 @@
 }
 
 .application__display {
-  margin: 0 2.5rem;
+  margin: 0 4rem;
+}
+@media only screen and (max-width: $bp-small) {
+  .application__display {
+    margin: 1.7rem 3rem;
+  }
+}
+@media only screen and (max-width: $bp-smaller) {
+  .application__display {
+    margin: 1.5rem 2.5rem;
+  }
 }
 @media only screen and (max-width: $bp-smallest) {
   .application__display {
-    margin: 0 0.5rem;
+    margin: 1rem 2rem;
   }
 }
 
