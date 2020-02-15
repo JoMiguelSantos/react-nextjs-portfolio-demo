@@ -5,7 +5,8 @@
   $activeColor: $primary-dark,
   $borderColor: $secondary,
   $selector: "&::after",
-  $time: 1s
+  $time: 1s,
+  $size: 3rem
 ) {
   // Animation Keyframes
   @keyframes spinner {
@@ -18,12 +19,6 @@
   }
   position: relative;
 
-  // Styles to fade out spinner when loaded
-  &.loaded {
-    opacity: 0;
-    transition: opacity linear 0.2s;
-  }
-
   // Spinner
   #{$selector} {
     animation: $time linear infinite spinner;
@@ -31,14 +26,14 @@
     border-bottom-color: #{$activeColor};
     border-radius: 50%;
     content: "";
-    height: 3rem;
+    height: $size;
     left: 50%;
     opacity: inherit;
     position: absolute;
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
     transform-origin: center;
-    width: 3rem;
+    width: $size;
     will-change: transform;
   }
 }

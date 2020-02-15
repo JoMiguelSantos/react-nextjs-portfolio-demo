@@ -1,5 +1,6 @@
-@import "../../sass/theme/colors";
+@import "../../sass/theme/theme";
 @import "../../sass/mixins";
+@import "../../sass/mediaQueries";
 
 .spinner {
   display: flex;
@@ -9,16 +10,37 @@
 }
 
 .loading-spinner {
-  @include loading-spinner;
-  height: 3rem;
   padding: 2rem;
+
+  &.small {
+    @include loading-spinner($size: 1.5rem);
+  }
+
+  &.medium {
+    @include loading-spinner($size: 3rem);
+  }
+
+  &.large {
+    @include loading-spinner($size: 4.5rem);
+  }
 }
 
 .loading-spinner-copy {
-  font-size: 0.8rem;
+  &.small {
+    font-size: 0.6rem;
 
-  &.loaded {
-    opacity: 0;
-    transition: opacity linear 0.2s;
+    @media only screen and (max-width: $bp-medium) {
+      & {
+        width: min-content;
+      }
+    }
+  }
+
+  &.medium {
+    font-size: 0.8rem;
+  }
+
+  &.large {
+    font-size: 1rem;
   }
 }

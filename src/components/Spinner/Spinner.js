@@ -1,10 +1,16 @@
 import "./Spinner.scss";
 
-const Spinner = () => {
+const Spinner = ({ message, size = "medium" }) => {
   return (
     <div className="spinner">
-      <div className="loading-spinner" role="alert" aria-live="assertive"></div>
-      <p className="loading-spinner-copy">Content is loading...</p>
+      <div
+        className={`loading-spinner ${size}`}
+        role="alert"
+        aria-live="assertive"
+      ></div>
+      <p className={`loading-spinner-copy ${size}`}>
+        {message || "Content is loading..."}
+      </p>
     </div>
   );
 };
