@@ -8,7 +8,7 @@ import { getApplications } from "../../../database/applications";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useFetchUser } from "../../../lib/auth/user";
-import withAuth from "../../../container/Auth/withAuth";
+import withAuth from "../../../container/auth/withAuth";
 
 import "./index.scss";
 

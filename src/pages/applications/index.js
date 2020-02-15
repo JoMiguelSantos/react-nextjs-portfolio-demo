@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import { populateApplicationsState } from "../../store/actions/main";
 import { getApplications } from "../../database/applications";
-import withAuth from "../../container/Auth/withAuth";
+import withAuth from "../../container/auth/withAuth";
 
 import "./index.scss";
 
