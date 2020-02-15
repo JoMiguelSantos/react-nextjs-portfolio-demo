@@ -29,7 +29,7 @@ const navMenuItems = ({ user, loading }) => {
             />
             <div className="navmenu__content">
               {filtered_routes.map(route => (
-                <NavMenuItems basePath={route} />
+                <NavMenuItems key={route} basePath={route} />
               ))}
             </div>
           </nav>

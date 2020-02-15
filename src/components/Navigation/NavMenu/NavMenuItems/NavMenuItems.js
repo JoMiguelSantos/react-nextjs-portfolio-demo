@@ -94,6 +94,7 @@ const navMenuItem = props => {
       <div className="navmenu__horizontal--items">
         {pages[basePathName].childPages.map(pageName => (
           <HorizontalNavItem
+            key={pageName}
             basePath={pages[basePathName].basePage}
             pageName={pageName}
             isActive={props.isActive}

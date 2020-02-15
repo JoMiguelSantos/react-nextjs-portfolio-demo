@@ -58,7 +58,9 @@ const OpenApplications = props => {
   };
 
   const applicationEntries = props.applications
-    ? props.applications.map(app => <Application application={app} />)
+    ? props.applications.map(app => (
+        <Application key={app.entryId} application={app} />
+      ))
     : null;
 
   // if user refreshes the page and loses the session, state will be empty
@@ -78,6 +80,7 @@ const OpenApplications = props => {
     } else {
       setLoading(false);
     }
+
     return;
   }, []);
 
