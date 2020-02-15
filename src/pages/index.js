@@ -79,7 +79,7 @@ const index = () => {
 
   const instructions = (
     <React.Fragment>
-      <h4>{`Welcome back to the homepage ${
+      <h4>{`Welcome to the Logged-in homepage ${
         user && "given_name" in user ? user.given_name : "Stranger"
       }`}</h4>
       <p>

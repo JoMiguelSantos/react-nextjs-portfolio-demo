@@ -24,3 +24,16 @@
     transform: translateY(0);
   }
 }
+
+.code {
+  height: 1rem;
+  line-height: 1rem;
+
+  & > * {
+    vertical-align: top;
+  }
+}
+
+.git-icon {
+  transform: translateY(-5px);
+}
