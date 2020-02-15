@@ -2,6 +2,7 @@ import Step from "../../components/Applications/Steps/Step";
 import SavedEntry from "../Forms/SavedEntry";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArchiveIcon from "@material-ui/icons/Archive";
+import Spinner from "../Spinner/Spinner";
 
 import {
   newPhoneScreeningFormFields,
@@ -46,6 +47,7 @@ const Application = props => {
   const [currentFormId, setCurrentFormId] = useState();
   const [currentStep, setCurrentStep] = useState();
   const [isRemoveApplication, setRemoveApplication] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const applications = props.applications;
 
@@ -73,7 +75,7 @@ const Application = props => {
         application.steps &&
           application.steps.map(step => {
             steps.push(
-              <Step step={step.formId} entryId={props.application.entryId} />
+              <Step step={step.formId} key={step.formId} entryId={props.application.entryId} />
             );
             // getting the already present steps to avoid repetitive steps
             stepsAppList.push(step.formId);
@@ -86,7 +88,7 @@ const Application = props => {
     step => !stepsAppList.includes(step)
   );
 
-  // NEW STEPS MENU
+  //// NEW STEPS MENU
   const onNewStepHandler = (e, step) => {
     // this if prevents a click on the "+" Icon of triggering an error
     if (step) {
@@ -108,18 +110,24 @@ const Application = props => {
     );
   });
 
-  // FORMS
+  // NEW STEP SUBMIT
   const onNewStepFormSubmit = async (formData, entryId, formId) => {
+    setLoading(true);
     if (formId === "application-submitted") {
+      const currentSteps = applications.filter(
+        app => app.entryId === entryId
+      )[0].steps;
+
       let applicationStepData = {
         ...formData,
         formId: "application-submitted"
       };
+
       let applicationData = {
         isOpen: props.application.isOpen,
         entryId: entryId,
         title: `${formData["company-name"]}  |  ${formData["job-title"]}  |  ${formData["location"]}`,
-        steps: [applicationStepData]
+        steps: [applicationStepData, ...currentSteps]
       };
       await upsertApplication(applicationData);
       batch(() => {
@@ -140,6 +148,7 @@ const Application = props => {
         );
       });
     }
+    setLoading(false);
     setNewStep(false);
   };
 
@@ -153,8 +162,11 @@ const Application = props => {
     />
   );
 
-  // EDIT STEPS MENU
+  //// EDIT STEPS MENU
+
+  // EDIT STEP SUBMIT
   const onEditStepFormSubmit = async (formData, entryId, formId) => {
+    setLoading(true);
     if (formId === "application-submitted") {
       let applicationStepData = {
         ...formData,
@@ -190,6 +202,7 @@ const Application = props => {
         })
       );
     }
+    setLoading(false);
     setEditStep(false);
   };
 
@@ -225,6 +238,7 @@ const Application = props => {
 
   // STEP ITEMS
   const onDeleteStepHandler = async (entryId, formId) => {
+    setLoading(true);
     // remove step from application in DB
     await deleteApplicationStep(entryId, formId);
 
@@ -248,6 +262,7 @@ const Application = props => {
         })
       );
     });
+    setLoading(false);
   };
 
   // this will check if the current active step in each application is the same as being evaluated
@@ -285,8 +300,10 @@ const Application = props => {
     });
 
   const onDeleteApplicationHandler = async entryId => {
+    setLoading(true);
     await deleteApplication(entryId);
     await props.dispatch(removeApplicationEntry({ entryId }));
+    setLoading(false);
   };
 
   const removeApp = (
@@ -301,12 +318,14 @@ const Application = props => {
   );
 
   const onAppStatusChangeHandler = async entryId => {
+    setLoading(true);
     const applicationCloseData = {
       isOpen: !props.application.isOpen,
       entryId: entryId
     };
     await upsertApplication(applicationCloseData);
     await props.dispatch(closeApplicationEntry(applicationCloseData));
+    setLoading(false);
   };
 
   const appStatusChange = (
@@ -321,7 +340,7 @@ const Application = props => {
     </div>
   );
 
-  return (
+  const content = (
     <div className="application">
       <div className="application__steps--container">
         <h2
@@ -359,6 +378,8 @@ const Application = props => {
       </div>
     </div>
   );
+
+  return isLoading ? <Spinner message="Saving changes..." /> : content;
 };
 
 const mapStateToProps = state => {
