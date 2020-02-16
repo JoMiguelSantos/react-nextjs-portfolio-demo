@@ -53,16 +53,16 @@ export default auth0.requireAuthentication(async (req, res) => {
     case "POST":
       //upsert an application
       console.log("upserting");
+      // then it means it's an update
       if ("entryId" in application) {
         delete application.entryId;
         Application.findOneAndUpdate(
           filter,
-          "isOpen" in application && Object.keys(application).length == 2
-            ? { isOpen: application.isOpen }
-            : application,
+          application,
           options,
           (error, application) => callback(error, application)
         );
+        // else it means it's a new application
       } else {
         Application.create(application, (error, application) =>
           callback(error, application)
