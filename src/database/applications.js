@@ -39,7 +39,7 @@ export const getApplicationSteps = async (entryId, formId) => {
   return result;
 };
 
-// UPSERT
+// POST
 export const upsertApplication = async data => {
   const result = await fetch(`${hostname}/api/db/applications`, {
     method: "POST",
