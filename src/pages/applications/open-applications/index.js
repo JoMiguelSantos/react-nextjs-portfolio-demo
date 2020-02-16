@@ -15,7 +15,6 @@ import {
   getApplications
 } from "../../../database/applications";
 
-import auth0 from "../../../lib/auth/auth0";
 import { connect, batch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useFetchUser } from "../../../lib/auth/user";
@@ -27,9 +26,9 @@ const OpenApplications = props => {
   const { user, loading } = useFetchUser({ required: true });
   const [isNewApplication, setNewApplication] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [isEmpty, setEmpty] = useState(false);
+  // const [isEmpty, setEmpty] = useState(false);
 
-  const onNewApplicationFormSubmit = async (formData, entryId) => {
+  const onNewApplicationFormSubmit = async (formData, entryId, formId) => {
     let applicationStepData = {
       ...formData,
       formId: "application-submitted"
@@ -54,7 +53,7 @@ const OpenApplications = props => {
     });
 
     setNewApplication(false);
-    if (isEmpty) setEmpty(false);
+    // if (isEmpty) setEmpty(false);
   };
 
   const applicationEntries = props.applications
@@ -69,7 +68,7 @@ const OpenApplications = props => {
     const populateState = async () => {
       const stateDB = await getApplications();
 
-      if (stateDB.length === 0) setEmpty(true);
+      // if (stateDB.length === 0) setEmpty(true);
 
       // populate state with all applications from DB
       await props.dispatch(populateApplicationsState(stateDB));
@@ -101,9 +100,7 @@ const OpenApplications = props => {
           formFields={newApplicationFormFields}
           formId="application-submitted"
           entryId=""
-          onNewApplicationFormSubmit={(formData, entryId) =>
-            onNewApplicationFormSubmit(formData, entryId)
-          }
+          onNewApplicationFormSubmit={onNewApplicationFormSubmit}
           onCancelClick={() => setNewApplication(false)}
         />
       )}
@@ -112,12 +109,12 @@ const OpenApplications = props => {
 
   if (loading || isLoading) {
     content = <Spinner />;
-  } else if (isEmpty) {
+  } else if (props.applications.length === 0) {
     content = (
       <React.Fragment>
         <div className="applications__empty-state">
           {" "}
-          Create your first application
+          You currently have no open applications
         </div>
         {content}
       </React.Fragment>

@@ -40,10 +40,12 @@ const ClosedApplications = props => {
 
   const content = (
     <React.Fragment>
-      {applicationEntries ? (
+      {applicationEntries.length > 0 ? (
         applicationEntries
       ) : (
-        <p>You currently have no closed applications</p>
+        <p className="no-closed-applications">
+          You currently have no closed applications
+        </p>
       )}
     </React.Fragment>
   );
