@@ -13,6 +13,11 @@ import "./index.scss";
 const Applications = props => {
   const { user, loading } = useFetchUser({ required: true });
 
+  // create or update user profile in the DB
+  useEffect(() => {
+    fetch("/api/db/applications/updateUserProfile");
+  }, [user]);
+
   // if user refreshes the page and loses the session, state will be empty
   // if so, trigger a side effect to populate the state from the DB
   useEffect(() => {
