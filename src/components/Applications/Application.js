@@ -1,5 +1,5 @@
 import Step from "../../components/Applications/Steps/Step";
-import SavedEntry from "../Forms/SavedEntry";
+import StepItem from "./Steps/StepItem";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import Spinner from "../Spinner/Spinner";
@@ -16,36 +16,27 @@ import Form from "../../components/Forms/Form";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import {
   newApplicationStep,
-  editApplicationStep,
-  removeApplicationStep,
   editApplicationEntry,
   closeApplicationEntry,
   removeApplicationEntry,
   activeStep
 } from "../../store/actions/main";
 import {
-  deleteApplicationStep,
   upsertApplicationStep,
   upsertApplication,
   deleteApplication
 } from "../../database/applications";
 import { connect, batch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { capitalize } from "../../js.utils";
 
 import "./Application.scss";
 
-//ToDo
-// add tooltip to explain the different steps definitions like the difference between
-// a phone screening and a phone interview
-
 const Application = props => {
   const [isNewStep, setNewStep] = useState(false);
-  const [isEditStep, setEditStep] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [currentFormId, setCurrentFormId] = useState();
-  const [currentStep, setCurrentStep] = useState();
   const [isRemoveApplication, setRemoveApplication] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -53,7 +44,7 @@ const Application = props => {
 
   //STEPS
   // this is the list of steps available to choose from in the beginning
-  let stepsList = {
+  const stepsList = {
     "application-submitted": newApplicationFormFields,
     "phone-screening": newPhoneScreeningFormFields,
     "phone-interview": newPhoneInterviewFormFields,
@@ -75,7 +66,11 @@ const Application = props => {
         application.steps &&
           application.steps.map(step => {
             steps.push(
-              <Step step={step.formId} key={step.formId} entryId={props.application.entryId} />
+              <Step
+                step={step.formId}
+                key={step.formId}
+                entryId={props.application.entryId}
+              />
             );
             // getting the already present steps to avoid repetitive steps
             stepsAppList.push(step.formId);
@@ -162,109 +157,6 @@ const Application = props => {
     />
   );
 
-  //// EDIT STEPS MENU
-
-  // EDIT STEP SUBMIT
-  const onEditStepFormSubmit = async (formData, entryId, formId) => {
-    setLoading(true);
-    if (formId === "application-submitted") {
-      let applicationStepData = {
-        ...formData,
-        formId: "application-submitted"
-      };
-
-      const applicationToEdit =
-        applications && applications.filter(app => app.entryId === entryId)[0];
-
-      let applicationData = {
-        isOpen: props.application.isOpen,
-        entryId: entryId,
-        title: `${formData["company-name"]} | ${formData["job-title"]} | ${formData["location"]}`,
-        steps:
-          applicationToEdit.steps &&
-          applicationToEdit.steps.map(step => {
-            if (step.formId === formId) {
-              return applicationStepData;
-            }
-            return step;
-          })
-      };
-
-      await upsertApplication(applicationData);
-      await props.dispatch(editApplicationEntry(applicationData));
-    } else {
-      await upsertApplicationStep(formData, entryId, formId);
-      await props.dispatch(
-        editApplicationStep({
-          ...formData,
-          formId: formId,
-          entryId: entryId
-        })
-      );
-    }
-    setLoading(false);
-    setEditStep(false);
-  };
-
-  const onEditStepHandler = (entryId, formId, step) => {
-    setCurrentFormId(formId);
-    setEditStep(true);
-    setCurrentStep(step);
-  };
-
-  // this filters the values of the current step being edited
-  // and the keys from the current form and creates a prefilled form values
-  const allowedKeys =
-    currentFormId && stepsList[currentFormId].map(field => field.name);
-  const formValues =
-    currentStep &&
-    Object.keys(currentStep)
-      .filter(key => allowedKeys.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = currentStep[key];
-        return obj;
-      }, {});
-
-  const editStepForm = isEditStep && (
-    <Form
-      formFields={stepsList[currentFormId]}
-      formValues={formValues}
-      formId={currentFormId}
-      entryId={props.application.entryId}
-      onEditStepFormSubmit={onEditStepFormSubmit}
-      onCancelClick={() => setEditStep(false)}
-    />
-  );
-
-  // STEP ITEMS
-  const onDeleteStepHandler = async (entryId, formId) => {
-    setLoading(true);
-    // remove step from application in DB
-    await deleteApplicationStep(entryId, formId);
-
-    // select the last step that isn't the deleted one (state is still the old one at this point)
-    const lastStep =
-      applications.filter(el => el.entryId === entryId)[0].steps &&
-      applications
-        .filter(el => el.entryId === entryId)[0]
-        .steps.filter(el => el.formId !== formId)
-        .slice(-1)[0];
-
-    // dispatches both actions at the same time
-    batch(() => {
-      // turn the last step active
-      lastStep && props.dispatch(activeStep({ [entryId]: lastStep.formId }));
-      // remove the step from the application in the store
-      props.dispatch(
-        removeApplicationStep({
-          entryId: entryId,
-          formId: formId
-        })
-      );
-    });
-    setLoading(false);
-  };
-
   // this will check if the current active step in each application is the same as being evaluated
   const applicationStepActive = (step, entryId) => {
     return step.formId === props.activeSteps[entryId];
@@ -280,17 +172,12 @@ const Application = props => {
           application.steps.map(step => {
             if (applicationStepActive(step, application.entryId)) {
               return (
-                <SavedEntry
-                  {...step}
+                <StepItem
+                  step={step}
                   entryId={application.entryId}
+                  isOpen={application.isOpen}
                   key={step.formId}
-                  onDeleteClick={() =>
-                    onDeleteStepHandler(application.entryId, step.formId)
-                  }
-                  onEditClick={() => {
-                    onEditStepHandler(application.entryId, step.formId, step);
-                  }}
-                  pageIdentifier="applications"
+                  setAppLoading={setLoading}
                 />
               );
             }
@@ -347,6 +234,7 @@ const Application = props => {
           className="application__header"
           onMouseEnter={() => setRemoveApplication(true)}
           onMouseLeave={() => setRemoveApplication(false)}
+          onClick={() => setRemoveApplication(!isRemoveApplication)}
         >
           {isRemoveApplication
             ? [removeApp, appStatusChange]
@@ -359,6 +247,7 @@ const Application = props => {
               className="application__new-step"
               onMouseEnter={() => setIsShown(true)}
               onMouseLeave={() => setIsShown(false)}
+              onClick={() => setIsShown(!isShown)}
             >
               <AddCircleIcon className="form__entry--add" fontSize="large" />
               {!isShown && (
@@ -371,10 +260,7 @@ const Application = props => {
       </div>
       <div className="application__display">
         {isNewStep && newStepForm}
-        {isEditStep && editStepForm}
-        {!isNewStep && !isEditStep && (
-          <div className="application__steps--items">{stepItems}</div>
-        )}
+        {!isNewStep && stepItems}
       </div>
     </div>
   );

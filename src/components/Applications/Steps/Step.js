@@ -2,7 +2,9 @@ import { capitalize } from "../../../js.utils";
 import { connect } from "react-redux";
 import { activeStep } from "../../../store/actions/main";
 
-const step = props => {
+import "./StepItem.scss";
+
+const Step = props => {
   const clickHandler = (e, step) => {
     // set active step on state for specific entryId
     props.dispatch(activeStep({ [props.entryId]: step }));
@@ -30,4 +32,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(step);
+export default connect(mapStateToProps, null)(Step);

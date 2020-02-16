@@ -1,0 +1,53 @@
+@import "../../../sass/theme/theme";
+@import "../../../sass/mediaQueries";
+
+.application__step {
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: $secondary;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    display: flex;
+    position: relative;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
+    border-radius: 50px;
+  }
+}
+@media only screen and (max-width: $bp-largest) {
+  .application__step {
+    padding: 0.5rem 0.3rem;
+  }
+}
+@media only screen and (max-width: $bp-large) {
+  .application__step {
+    padding: 0.3rem;
+    width: min-content;
+    font-size: 0.7rem;
+  }
+}
+@media only screen and (max-width: $bp-small) {
+  .application__step {
+    padding: 0.5rem 0.4rem;
+    width: max-content;
+  }
+}
+@media only screen and (max-width: $bp-smaller) {
+  .application__step {
+    padding: 0.3rem;
+  }
+}
+@media only screen and (max-width: $bp-smallest) {
+  .application__step {
+    width: min-content;
+    font-size: 0.6rem;
+  }
+}
+
+.application__step--icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

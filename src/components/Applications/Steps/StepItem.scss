@@ -1,0 +1,35 @@
+@import "../../../sass/theme/theme";
+@import "../../../sass/mediaQueries";
+
+.entry__list--items.applications {
+  display: none;
+
+  &.active {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: space-between;
+    font-size: 0.7rem;
+  }
+
+  & > .entry__list--item {
+    height: 1rem;
+    margin: 0.1rem 0.2rem;
+  }
+
+  & > .entry__icons {
+    height: 1rem;
+  }
+}
+@media only screen and (max-width: $bp-smaller) {
+  .entry__list--items.applications {
+    flex-direction: column;
+  }
+  .entry__list--items.applications > .entry__list--item {
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    max-width: 25rem;
+  }
+}

@@ -58,89 +58,6 @@
 .application__steps--items {
 }
 
-.application__step {
-  padding: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0);
-  color: $secondary;
-  cursor: pointer;
-
-  &:hover,
-  &.active {
-    display: flex;
-    position: relative;
-    color: $primary-dark;
-    border: 1px solid $primary-dark;
-    border-radius: 50px;
-  }
-}
-@media only screen and (max-width: $bp-largest) {
-  .application__step {
-    padding: 0.5rem 0.3rem;
-  }
-}
-@media only screen and (max-width: $bp-large) {
-  .application__step {
-    padding: 0.3rem;
-    width: min-content;
-    font-size: 0.7rem;
-  }
-}
-@media only screen and (max-width: $bp-small) {
-  .application__step {
-    padding: 0.5rem 0.4rem;
-    width: max-content;
-  }
-}
-@media only screen and (max-width: $bp-smaller) {
-  .application__step {
-    padding: 0.3rem;
-  }
-}
-@media only screen and (max-width: $bp-smallest) {
-  .application__step {
-    width: min-content;
-  }
-}
-
-.application__step--icons {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.entry__list--items.applications {
-  display: none;
-
-  &.active {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: start;
-    justify-content: space-between;
-    font-size: 0.7rem;
-  }
-
-  & > .entry__list--item {
-    height: 1rem;
-    margin: 0.1rem 0.2rem;
-  }
-
-  & > .entry__icons {
-    height: 1rem;
-  }
-}
-@media only screen and (max-width: $bp-smaller) {
-  .entry__list--items.applications {
-    flex-direction: column;
-  }
-  .entry__list--items.applications > .entry__list--item {
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 0.3rem;
-    max-width: 25rem;
-  }
-}
-
 .application__header {
   background-image: linear-gradient(to right bottom, $primary-light, $neutral);
   border-radius: 5px;
@@ -178,9 +95,13 @@
 }
 @media only screen and (max-width: $bp-smallest) {
   .application__header {
-    width: 100%;
+    width: 99%;
+    justify-content: start;
     border-radius: 0;
-    padding: 0.4rem 0.2rem;
+    padding: 0.4rem 0 0.4rem 0.2rem;
+    height: 0.9rem;
+    font-size: 0.75rem;
+    overflow: none;
   }
 }
 
@@ -219,7 +140,7 @@
 }
 @media only screen and (max-width: $bp-smallest) {
   .application__display {
-    margin: 1rem 2rem;
+    margin: 1rem 0.5rem;
   }
 }
 
