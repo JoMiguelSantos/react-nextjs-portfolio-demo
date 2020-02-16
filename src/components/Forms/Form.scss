@@ -1,10 +1,18 @@
 @import "../../sass/theme/theme";
+@import "../../sass/mediaQueries";
 
 .form {
   display: flex;
   align-items: flex-start;
   justify-content: start;
   margin-left: 2rem;
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      flex-direction: column;
+      margin-left: 0.2rem;
+    }
+  }
 }
 
 .form__box {
@@ -18,6 +26,16 @@
 
   & > * {
     margin-bottom: 0.25rem;
+  }
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.2rem;
+      font-size: 0.6rem;
+    }
   }
 }
 
@@ -47,6 +65,12 @@
   transition: transform 0.2s;
   padding: 0.3rem 1.5rem;
   cursor: pointer;
+
+  @media only screen and (max-width: $bp-smallest) {
+    & {
+      margin-top: 0.1rem;
+    }
+  }
 
   &:hover {
     background: $primary-dark;

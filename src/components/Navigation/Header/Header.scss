@@ -1,4 +1,5 @@
 @import "../../../sass/theme/theme";
+@import "../../../sass/mediaQueries";
 
 .header {
   display: flex;
@@ -8,17 +9,10 @@
   width: 100vw;
   box-shadow: 0 10px 10rem 1rem $secondary-light;
   background: $neutral;
+  position: relative;
 
   &__logo {
-    font-family: $logo-font;
-    font-size: 2rem;
-    padding: 0.3rem 1rem;
-  }
-
-  &__logo:link,
-  &__logo:visited {
-    text-decoration: none;
-    color: $primary-dark;
+    transform: translateY(-5px);
   }
 }
 
