@@ -14,3 +14,5 @@ Even though the App is responsive to the different screen sizes, this App is not
 
 I do not allow anyone to use significant portions of this codebase and claim it as their own work. 
 Of course, if you'd like to use the configs and functions to help with your own project, feel free to reach out.
+
+You can find this demo -> https://reshaped-demo.now.sh
