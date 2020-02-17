@@ -26,9 +26,9 @@ const OpenApplications = props => {
   const { user, loading } = useFetchUser({ required: true });
   const [isNewApplication, setNewApplication] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  // const [isEmpty, setEmpty] = useState(false);
 
   const onNewApplicationFormSubmit = async (formData, entryId, formId) => {
+    setLoading(true);
     let applicationStepData = {
       ...formData,
       formId: "application-submitted"
@@ -53,7 +53,7 @@ const OpenApplications = props => {
     });
 
     setNewApplication(false);
-    // if (isEmpty) setEmpty(false);
+    setLoading(false);
   };
 
   const applicationEntries = props.applications
@@ -67,8 +67,6 @@ const OpenApplications = props => {
   useEffect(() => {
     const populateState = async () => {
       const stateDB = await getApplications();
-
-      // if (stateDB.length === 0) setEmpty(true);
 
       // populate state with all applications from DB
       await props.dispatch(populateApplicationsState(stateDB));
@@ -95,19 +93,22 @@ const OpenApplications = props => {
           <p className="new_job_application__label">New Job Application</p>
         </div>
       )}
-      {isNewApplication && (
-        <Form
-          formFields={newApplicationFormFields}
-          formId="application-submitted"
-          entryId=""
-          onNewApplicationFormSubmit={onNewApplicationFormSubmit}
-          onCancelClick={() => setNewApplication(false)}
-        />
-      )}
+      {isNewApplication &&
+        (isLoading ? (
+          <Spinner />
+        ) : (
+          <Form
+            formFields={newApplicationFormFields}
+            formId="application-submitted"
+            entryId=""
+            onNewApplicationFormSubmit={onNewApplicationFormSubmit}
+            onCancelClick={() => setNewApplication(false)}
+          />
+        ))}
     </React.Fragment>
   );
 
-  if (loading || isLoading) {
+  if ((loading || isLoading) && !isNewApplication) {
     content = <Spinner />;
   } else if (props.applications.length === 0) {
     content = (
