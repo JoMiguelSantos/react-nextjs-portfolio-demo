@@ -74,6 +74,7 @@ const index = () => {
       <p>
         {" "}
         Please Signup/Login to continue this demo and for further instructions.
+        You don't need a real email so feel free to use a fake email.
       </p>
     </React.Fragment>
   );
