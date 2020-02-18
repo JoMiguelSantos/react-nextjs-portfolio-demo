@@ -33,7 +33,7 @@ export const newOnSiteInterviewFormFields = [
 
 export const newTechnicalTestFormFields = [
   { name: "test-type" },
-  { name: "test-subject(s)" },
+  { name: "test-subjects" },
   { name: "received-date", type: "date" },
   { name: "time-to-complete-in-minutes", type: "number" },
   { name: "deliver-deadline", type: "date" },

@@ -259,13 +259,46 @@ const savedEntry = props => {
       </div>
     ) : null;
 
-  // to be reintegrated later
-  // const feedbackButton = (
-  //   <div className="review">
-  //     <RateReviewIcon />
-  //     <p className="review__text">Give Your Feedback</p>
-  //   </div>
-  // );
+  const testType =
+    props["test-type"] === "" || props["test-type"] ? (
+      <div className="entry__list--item">
+        <label>Test Type</label>
+        <p>{props["test-type"]}</p>
+      </div>
+    ) : null;
+
+  const testSubjects =
+    props["test-subjects"] === "" || props["test-subjects"] ? (
+      <div className="entry__list--item">
+        <label>Test Subject(s)</label>
+        <p>{props["test-subjects"]}</p>
+      </div>
+    ) : null;
+
+  const receivedDate =
+    props["received-date"] === "" || props["received-date"] ? (
+      <div className="entry__list--item">
+        <label>Received Date</label>
+        <p>{props["received-date"]}</p>
+      </div>
+    ) : null;
+
+  const timeToCompleteInMinutes =
+    props["time-to-complete-in-minutes"] === "" ||
+    props["time-to-complete-in-minutes"] ? (
+      <div className="entry__list--item">
+        <label>Time To Complete In Minutes</label>
+        <p>{props["time-to-complete-in-minutes"]}</p>
+      </div>
+    ) : null;
+
+  const deliverDeadline =
+    props["deliver-deadline"] === "" || props["deliver-deadline"] ? (
+      <div className="entry__list--item">
+        <label>Deliver Deadline</label>
+        <p>{props["deliver-deadline"]}</p>
+      </div>
+    ) : null;
 
   const isActive = () => {
     return props.activeSteps[props.entryId] === props.formId;
@@ -304,9 +337,14 @@ const savedEntry = props => {
       {decisionDeadline}
       {linkedIn}
       {attire}
-      {notes}
       {startDate}
       {endDate}
+      {testType}
+      {testSubjects}
+      {receivedDate}
+      {timeToCompleteInMinutes}
+      {deliverDeadline}
+      {notes}
       <div className="entry__icons">
         <EditIcon onClick={props.onEditClick} />
         <DeleteIcon onClick={props.onDeleteClick} />
