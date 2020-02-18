@@ -72,6 +72,7 @@ const index = () => {
         responsiveness.
       </p>
       <p>
+        {" "}
         Please Signup/Login to continue this demo and for further instructions.
       </p>
     </React.Fragment>
