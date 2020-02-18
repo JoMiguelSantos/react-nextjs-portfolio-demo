@@ -109,7 +109,7 @@ const OpenApplications = props => {
   );
 
   if ((loading || isLoading) && !isNewApplication) {
-    content = <Spinner />;
+    content = <Spinner message="Saving changes..." />;
   } else if (props.applications.length === 0) {
     content = (
       <React.Fragment>
