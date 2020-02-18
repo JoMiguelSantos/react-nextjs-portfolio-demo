@@ -32,8 +32,11 @@ export const newOnSiteInterviewFormFields = [
 ];
 
 export const newTechnicalTestFormFields = [
-  { name: "interviewer-name" },
-  { name: "interview-time", type: "datetime-local", required: true },
+  { name: "test-type" },
+  { name: "test-subject(s)" },
+  { name: "received-date", type: "date" },
+  { name: "time-to-complete-in-minutes", type: "number" },
+  { name: "deliver-deadline", type: "date" },
   { name: "notes" }
 ];
 
