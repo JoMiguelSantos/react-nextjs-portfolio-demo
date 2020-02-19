@@ -95,7 +95,7 @@ const OpenApplications = props => {
       )}
       {isNewApplication &&
         (isLoading ? (
-          <Spinner />
+          <Spinner message="Saving changes..." />
         ) : (
           <Form
             formFields={newApplicationFormFields}
@@ -109,7 +109,7 @@ const OpenApplications = props => {
   );
 
   if ((loading || isLoading) && !isNewApplication) {
-    content = <Spinner message="Saving changes..." />;
+    content = <Spinner />;
   } else if (props.applications.length === 0) {
     content = (
       <React.Fragment>
