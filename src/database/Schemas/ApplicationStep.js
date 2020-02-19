@@ -22,6 +22,11 @@ const ApplicationStepSchema = new Schema({
   notes: String,
   attire: String,
   "duration-in-minutes": Number,
+  "test-type": String,
+  "test-subjects": String,
+  "received-date": Date,
+  "time-to-complete-in-minutes": Number,
+  "deliver-deadline": Date,
   isDeleted: { type: Boolean, default: false }
 });
 
