@@ -33,3 +33,14 @@ export const renameProp = (
   [newProp]: old,
   ...others
 });
+
+// unfetch doesn't check for HTTPresponse validity so this takes care of that
+export const checkStatus = response => {
+  if (response.ok) {
+    return response;
+  } else {
+    var error = new Error(response.statusText);
+    error.response = response;
+    return Promise.reject(error);
+  }
+};
