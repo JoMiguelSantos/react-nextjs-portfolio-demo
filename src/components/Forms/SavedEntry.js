@@ -283,6 +283,14 @@ const savedEntry = props => {
       </div>
     ) : null;
 
+  const jobOfferDate =
+    props["job-offer-date"] === "" || props["job-offer-date"] ? (
+      <div className="entry__list--item">
+        <label>Job Offer Date</label>
+        <p>{props["job-offer-date"]}</p>
+      </div>
+    ) : null;
+
   const timeToCompleteInMinutes =
     props["time-to-complete-in-minutes"] === "" ||
     props["time-to-complete-in-minutes"] ? (
@@ -337,6 +345,7 @@ const savedEntry = props => {
       {decisionDeadline}
       {linkedIn}
       {attire}
+      {jobOfferDate}
       {startDate}
       {endDate}
       {testType}
