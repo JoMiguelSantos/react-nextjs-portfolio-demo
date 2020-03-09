@@ -189,7 +189,7 @@
 }
 
 .remove-application,
-.app-status-change {
+.toggle-app-status {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,7 +203,7 @@
 }
 @media only screen and (max-width: $bp-medium) {
   .remove-application,
-  .app-status-change {
+  .toggle-app-status {
     padding: 0 0.3rem;
   }
 }
@@ -214,7 +214,7 @@
   }
 }
 
-.app-status-change {
+.toggle-app-status {
   &:hover {
     color: $secondary;
   }
