@@ -14,14 +14,17 @@ export default auth0.requireAuthentication(async (req, res) => {
   // if no body is available then search in query for the application
   const { application } = req.body ? req.body : req.query;
 
-  // if no entryId is sent then get all application for the user
+  // if no entryId is sent then get all application for the user,
+  // if GET is the method, else null to avoid unwanted change
   const filter =
-    application && "entryId" in application
+    application && application.entryId
       ? { userId: user.sub, _id: application.entryId }
-      : { userId: user.sub };
+      : method === "GET"
+      ? { userId: user.sub }
+      : null;
 
-  // enable upsert, defaults and return new updated document
-  const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+  // enable defaults and return new updated document
+  const options = { new: true, setDefaultsOnInsert: true };
 
   const callback = (error, application) => {
     if (error) {
@@ -45,29 +48,49 @@ export default auth0.requireAuthentication(async (req, res) => {
 
   switch (method) {
     case "GET":
-      console.log("getting");
       Application.find(filter, (error, application) =>
         callback(error, application)
       );
       break;
     case "POST":
-      //upsert an application
-      console.log("upserting");
-      // then it means it's an update
-      if ("entryId" in application) {
-        delete application.entryId;
-        Application.findOneAndUpdate(
-          filter,
-          application,
-          options,
-          (error, application) => callback(error, application)
-        );
-        // else it means it's a new application
-      } else {
-        Application.create(application, (error, application) =>
-          callback(error, application)
-        );
+      Application.create(application, (error, application) =>
+        callback(error, application)
+      );
+      break;
+    case "PUT":
+      delete application.entryId;
+      Application.findOneAndUpdate(
+        filter,
+        application,
+        options,
+        (error, application) => callback(error, application)
+      );
+      break;
+    case "PATCH":
+      const applicationDB = await Application.findById(application.entryId);
+      delete application.entryId;
+      // patch all present keys except "steps" which will be handled separately
+      for (let key in application) {
+        if (applicationDB[key] !== "steps")
+          applicationDB[key] = application[key];
       }
+
+      if (application.steps && application.steps.length > 0) {
+        //get the keys of the steps that need change
+        const stepsToChange = application.steps.map(step => step.formId);
+        applicationDB.steps.forEach(DBstep => {
+          // if part of the steps to change
+          if (stepsToChange.includes(DBstep.formId)) {
+            // replace each property in DBstep with value on request step
+            for (let [key, value] of Object.entries(
+              application.steps.find(step => step.formId === DBstep.formId)
+            )) {
+              DBstep[key] = value;
+            }
+          }
+        });
+      }
+      applicationDB.save((error, step) => callback(error, step));
       break;
     case "DELETE":
       Application.findOneAndRemove(filter, (error, application) =>
@@ -75,7 +98,7 @@ export default auth0.requireAuthentication(async (req, res) => {
       );
       break;
     default:
-      res.setHeader("Allow", ["GET", "POST", "DELETE"]);
+      res.setHeader("Allow", ["GET", "POST", "PUT", "PATCH", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 });

@@ -2,8 +2,8 @@ import connectToDB from "../../../../database/connect";
 import mongoose from "mongoose";
 import auth0 from "../../../../lib/auth/auth0";
 
-import { arraysMatch } from "../../../../js.utils";
 import Application from "../../../../database/Schemas/Application";
+import { Db } from "mongodb";
 
 // this auth0.requireAuthentication requires users to be authenticated to access this backend path
 export default auth0.requireAuthentication(async (req, res) => {
@@ -35,41 +35,50 @@ export default auth0.requireAuthentication(async (req, res) => {
     }
   };
 
-  //   delete step.entryId
-  console.log(step);
+  const applicationDB = await Application.findById(step.entryId);
+
   switch (method) {
     case "GET":
-      console.log("getting");
       Application.find(filter, (error, step) => callback(error, step));
       break;
     case "POST":
-      console.log("upserting");
-      // find application using entryId
-      const applicationUpsert = await Application.findById(step.entryId);
-      const stepsUpsert = applicationUpsert.steps.map(DBstep => {
+      delete step.entryId;
+      applicationDB.steps.push(step);
+      applicationDB.save((error, step) => callback(error, step));
+      break;
+    case "PUT":
+      delete step.entryId;
+      applicationDB.steps.forEach(DBstep => {
         if (DBstep.formId === step.formId) {
-          delete step.entryId;
-          return step;
+          for (let key in step) {
+            DBstep[key] = step[key];
+          }
         }
         return DBstep;
       });
-      // if step already exists then update
-      // else push the new step into the array
-      arraysMatch(applicationUpsert.steps, stepsUpsert)
-        ? applicationUpsert.steps.push(step)
-        : (applicationUpsert.steps = stepsUpsert);
-      applicationUpsert.save((error, step) => callback(error, step));
+
+      applicationDB.save((error, step) => callback(error, step));
+      break;
+    case "PATCH":
+      delete step.entryId;
+      applicationDB.steps.forEach(DBstep => {
+        if (DBstep.formId === step.formId) {
+          for (let key in step) {
+            DBstep[key] = step[key];
+          }
+        }
+        return DBstep;
+      });
+      applicationDB.save((error, step) => callback(error, step));
       break;
     case "DELETE":
-      const applicationStepDelete = await Application.findById(step.entryId);
-      const stepsToDelete = applicationStepDelete.steps.filter(
+      applicationDB.steps = applicationDB.steps.filter(
         DBstep => DBstep.formId !== step.formId
       );
-      applicationStepDelete.steps = stepsToDelete;
-      applicationStepDelete.save((error, step) => callback(error, step));
+      applicationDB.save((error, step) => callback(error, step));
       break;
     default:
-      res.setHeader("Allow", ["GET", "POST", "DELETE"]);
+      res.setHeader("Allow", ["GET", "POST", "PUT", "PATCH", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 });
