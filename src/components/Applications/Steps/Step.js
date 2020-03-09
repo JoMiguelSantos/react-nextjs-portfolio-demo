@@ -1,35 +1,25 @@
 import { capitalize } from "../../../js.utils";
-import { connect } from "react-redux";
-import { activeStep } from "../../../store/actions/main";
+import { useDispatch } from "react-redux";
+import { activeStep } from "../../../store/actions";
 
 import "./StepItem.scss";
 
-const Step = props => {
+const Step = ({ isActive, entryId, step }) => {
+  const dispatch = useDispatch();
+
   const clickHandler = (e, step) => {
     // set active step on state for specific entryId
-    props.dispatch(activeStep({ [props.entryId]: step }));
-  };
-
-  const isActive = () => {
-    return props.activeSteps[props.entryId] === props.step;
+    dispatch(activeStep({ [entryId]: step }));
   };
 
   return (
     <div
-      className={`application__step ${props.step} ${
-        isActive() ? "active" : ""
-      }`}
-      onClick={e => clickHandler(e, props.step)}
+      className={`application__step ${step} ${isActive ? "active" : ""}`}
+      onClick={e => clickHandler(e, step)}
     >
-      {capitalize(props.step)}
+      {capitalize(step)}
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    activeSteps: state.applications.activeSteps
-  };
-};
-
-export default connect(mapStateToProps, null)(Step);
+export default Step;

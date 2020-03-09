@@ -2,39 +2,39 @@ import Layout from "../../../layout/Layout";
 import Application from "../../../components/Applications/Application";
 import Spinner from "../../../components/Spinner/Spinner";
 
-import { populateApplicationsState } from "../../../store/actions/main";
-import { getApplications } from "../../../database/applications";
+import { getApplications } from "../../../store/actions";
 
-import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useFetchUser } from "../../../lib/auth/user";
-import withAuth from "../../../container/auth/withAuth";
+import withAuth from "../../../hoc/auth/withAuth";
 
 import "./index.scss";
 
 const ClosedApplications = props => {
-  const [isLoading, setLoading] = useState(true);
+  const isLoading = useSelector(state => state.applications.fetching);
+  const saving = useSelector(state => state.applications.saving);
+  const activeSteps = useSelector(state => state.applications.activeSteps);
+  const applications = useSelector(state =>
+    state.applications.applications.filter(app => !app.isOpen)
+  );
+  const dispatch = useDispatch();
   const { user, loading } = useFetchUser({ required: true });
 
-  const applicationEntries = props.applications
-    ? props.applications.map(app => <Application application={app} />)
+  const applicationEntries = applications
+    ? applications.map(app => (
+        <Application
+          application={app}
+          isSaving={saving[app.entryId]}
+          activeStep={activeSteps[app.entryId]}
+        />
+      ))
     : null;
 
   // if user refreshes the page and loses the session, state will be empty
   // if so, trigger a side effect to populate the state from the DB
   useEffect(() => {
-    const populateState = async () => {
-      const stateDB = await getApplications();
-
-      // populate state with all applications from DB
-      await props.dispatch(populateApplicationsState(stateDB));
-      setLoading(false);
-    };
-    if (props.applications.length === 0) {
-      populateState();
-    } else {
-      setLoading(false);
-    }
+    applications.length === 0 && dispatch(getApplications());
     return;
   }, []);
 
@@ -43,7 +43,7 @@ const ClosedApplications = props => {
       {applicationEntries.length > 0 ? (
         applicationEntries
       ) : (
-        <p className="no-closed-applications">
+        <p className="applications__empty-state">
           You currently have no closed applications
         </p>
       )}
@@ -52,15 +52,13 @@ const ClosedApplications = props => {
 
   return (
     <Layout user={user} loading={loading}>
-      {loading || isLoading ? <Spinner /> : content}
+      {loading || (isLoading && isLoading["applications"]) ? (
+        <Spinner />
+      ) : (
+        content
+      )}
     </Layout>
   );
-};
-
-const mapStateToProps = state => {
-  return {
-    applications: state.applications.applications.filter(app => !app.isOpen)
-  };
 };
 
 // get applications in DB using getInitialProps to fetch from the DB
@@ -68,12 +66,10 @@ ClosedApplications.getInitialProps = async ({ store, isServer }) => {
   const state = store.getState();
   // only fetch data if store is empty
   if (state.applications.applications.length === 0 && !isServer) {
-    const stateDB = await getApplications();
-
     // populate state with all applications from DB
-    await store.dispatch(populateApplicationsState(stateDB));
+    store.dispatch(getApplications());
   }
   return store;
 };
 
-export default connect(mapStateToProps, null)(withAuth(ClosedApplications));
+export default withAuth(ClosedApplications);

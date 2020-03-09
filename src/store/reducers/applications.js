@@ -3,12 +3,27 @@ import * as actionTypes from "../actions/actionTypes";
 
 export const initialState = {
   applications: [],
-  activeSteps: {}
+  activeSteps: {},
+  fetching: { applications: false },
+  saving: { "new-application": false }
 };
 
-const newApplicationEntry = (state, action) => {
-  const { _id, ...rest } = action.payload;
+const fetchingApplication = (state, action) => {
+  return updateObject(state, {
+    fetching: updateObject(state.isFetching, action.payload)
+  });
+};
 
+const savingApplication = (state, action) => {
+  return updateObject(state, {
+    saving: updateObject(state.isSaving, action.payload)
+  });
+};
+
+const addApplicationEntry = (state, action) => {
+  // this just transforms the _id from the DB into
+  // the entryId used by the app for simplicity
+  const { _id, ...rest } = action.payload;
   const application = {
     entryId: _id,
     ...rest
@@ -23,14 +38,17 @@ const editApplicationEntry = (state, action) => {
   return updateObject(state, {
     applications: state.applications.map(app => {
       if (app.entryId === action.payload.entryId) {
-        return action.payload;
+        return {
+          ...action.payload
+        };
       }
+
       return app;
     })
   });
 };
 
-const closeApplicationEntry = (state, action) => {
+const toggleApplicationStatus = (state, action) => {
   return updateObject(state, {
     applications: state.applications.map(app => {
       if (app.entryId === action.payload.entryId) {
@@ -44,12 +62,12 @@ const closeApplicationEntry = (state, action) => {
 const removeApplicationEntry = (state, action) => {
   return updateObject(state, {
     applications: state.applications.filter(app => {
-      return app.entryId !== action.payload.entryId;
+      return app.entryId !== action.payload;
     })
   });
 };
 
-const newApplicationStep = (state, action) => {
+const addApplicationStep = (state, action) => {
   const updatedState = state.applications.map(application => {
     // Find the item with the matching id
     if (application.entryId === action.payload.entryId) {
@@ -96,7 +114,7 @@ const editApplicationStep = (state, action) => {
 };
 
 const removeApplicationStep = (state, action) => {
-  const updatedState = state.applications.map(application => {
+  const updatedApplicationsState = state.applications.map(application => {
     // Find the item with the matching id
     if (application.entryId === action.payload.entryId) {
       // Return a new object
@@ -111,8 +129,24 @@ const removeApplicationStep = (state, action) => {
     return application;
   });
 
+  const updatedActiveStepsState = {
+    ...state.activeSteps,
+    [action.payload.entryId]:
+      (updatedApplicationsState.find(
+        app => app.entryId === action.payload.entryId
+      ).steps.length > 0 &&
+        updatedApplicationsState
+          .find(app => {
+            return app.entryId === action.payload.entryId;
+          })
+          .steps.filter(step => step.formId !== action.payload.formId)
+          .slice(-1)[0].formId) ||
+      ""
+  };
+
   return updateObject(state, {
-    applications: updatedState
+    applications: updatedApplicationsState,
+    activeSteps: updatedActiveStepsState
   });
 };
 
@@ -142,18 +176,22 @@ const populateApplicationsState = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.IS_FETCHING:
+      return fetchingApplication(state, action);
+    case actionTypes.IS_SAVING:
+      return savingApplication(state, action);
     case actionTypes.ADD_APPLICATION_ENTRY:
-      return newApplicationEntry(state, action);
+      return addApplicationEntry(state, action);
     case actionTypes.EDIT_APPLICATION_ENTRY:
       return editApplicationEntry(state, action);
-    case actionTypes.CLOSE_APPLICATION_ENTRY:
-      return closeApplicationEntry(state, action);
+    case actionTypes.TOGGLE_APPLICATION_STATUS:
+      return toggleApplicationStatus(state, action);
     case actionTypes.REMOVE_APPLICATION_ENTRY:
       return removeApplicationEntry(state, action);
     case actionTypes.POPULATE_APPLICATIONS_STATE:
       return populateApplicationsState(state, action);
     case actionTypes.ADD_APPLICATION_STEP:
-      return newApplicationStep(state, action);
+      return addApplicationStep(state, action);
     case actionTypes.EDIT_APPLICATION_STEP:
       return editApplicationStep(state, action);
     case actionTypes.REMOVE_APPLICATION_STEP:

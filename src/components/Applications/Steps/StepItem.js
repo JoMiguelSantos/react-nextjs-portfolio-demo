@@ -1,90 +1,46 @@
 import SavedEntry from "../../Forms/SavedEntry";
 import Form from "../../Forms/Form";
 
+import stepsList from "../../../content/applications/forms";
 import {
-  newPhoneScreeningFormFields,
-  newPhoneInterviewFormFields,
-  newOnSiteInterviewFormFields,
-  newTechnicalTestFormFields,
-  newJobOfferFormFields,
-  newApplicationFormFields
-} from "../../../content/applications/forms";
-import {
-  editApplicationStep,
-  removeApplicationStep,
-  editApplicationEntry,
-  activeStep
-} from "../../../store/actions/main";
-import {
-  upsertApplicationStep,
+  putApplicationStep,
   deleteApplicationStep,
-  upsertApplication
-} from "../../../database/applications";
+  putApplicationEntry
+} from "../../../store/actions";
 
-import { connect, batch } from "react-redux";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import "./Step.scss";
 
-const StepItem = ({
-  step,
-  entryId,
-  isOpen,
-  setAppLoading,
-  applications,
-  dispatch
-}) => {
+const StepItem = ({ step, entryId, isOpen }) => {
+  const dispatch = useDispatch();
   const [isEditStep, setEditStep] = useState(false);
 
-  // export this from steps perhaps to both App and StepItem
-  let stepsList = {
-    "application-submitted": newApplicationFormFields,
-    "phone-screening": newPhoneScreeningFormFields,
-    "phone-interview": newPhoneInterviewFormFields,
-    "onsite-interview": newOnSiteInterviewFormFields,
-    "technical-test": newTechnicalTestFormFields,
-    "job-offer": newJobOfferFormFields
-  };
-
-  // EDIT STEP SUBMIT
-  const onEditStepFormSubmit = async (formData, entryId, formId) => {
-    setAppLoading(true);
+  const onEditStepSubmitHandler = (formData, entryId, formId) => {
     if (formId === "application-submitted") {
       let applicationStepData = {
         ...formData,
         formId: "application-submitted"
       };
 
-      const applicationToEdit =
-        applications && applications.filter(app => app.entryId === entryId)[0];
-
       let applicationData = {
         isOpen: isOpen,
         entryId: entryId,
         title: `${formData["company-name"]} | ${formData["job-title"]} | ${formData["location"]}`,
-        steps:
-          applicationToEdit.steps &&
-          applicationToEdit.steps.map(appStep => {
-            if (appStep.formId === formId) {
-              return applicationStepData;
-            }
-            return appStep;
-          })
+        steps: [applicationStepData]
       };
 
-      await upsertApplication(applicationData);
-      await dispatch(editApplicationEntry(applicationData));
+      dispatch(putApplicationEntry(applicationData));
     } else {
-      await upsertApplicationStep(formData, entryId, formId);
-      await dispatch(
-        editApplicationStep({
+      dispatch(
+        putApplicationStep({
           ...formData,
           formId: formId,
           entryId: entryId
         })
       );
     }
-    setAppLoading(false);
     setEditStep(false);
   };
 
@@ -104,37 +60,13 @@ const StepItem = ({
       formValues={formValues}
       formId={step.formId}
       entryId={entryId}
-      onEditStepFormSubmit={onEditStepFormSubmit}
+      onEditStepFormSubmit={onEditStepSubmitHandler}
       onCancelClick={() => setEditStep(false)}
     />
   );
 
-  const onDeleteStepHandler = async (entryId, formId) => {
-    setAppLoading(true);
-    // remove step from application in DB
-    await deleteApplicationStep(entryId, formId);
-
-    // select the last step that isn't the deleted one (state is still the old one at this point)
-    const lastStep =
-      applications.filter(el => el.entryId === entryId)[0].steps &&
-      applications
-        .filter(el => el.entryId === entryId)[0]
-        .steps.filter(el => el.formId !== formId)
-        .slice(-1)[0];
-
-    // dispatches both actions at the same time
-    batch(() => {
-      // turn the last step active
-      lastStep && dispatch(activeStep({ [entryId]: lastStep.formId }));
-      // remove the step from the application in the store
-      dispatch(
-        removeApplicationStep({
-          entryId: entryId,
-          formId: formId
-        })
-      );
-    });
-    setAppLoading(false);
+  const onDeleteStepHandler = (entryId, formId) => {
+    dispatch(deleteApplicationStep(entryId, formId));
   };
 
   const savedEntry = (
@@ -154,10 +86,4 @@ const StepItem = ({
   return (isEditStep && editStepForm) || (!isEditStep && savedEntry);
 };
 
-const mapStateToProps = state => {
-  return {
-    applications: state.applications.applications
-  };
-};
-
-export default connect(mapStateToProps, null)(StepItem);
+export default StepItem;

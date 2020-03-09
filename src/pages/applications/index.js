@@ -4,13 +4,13 @@ import { useFetchUser } from "../../lib/auth/user";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import { populateApplicationsState } from "../../store/actions/main";
-import { getApplications } from "../../database/applications";
-import withAuth from "../../container/auth/withAuth";
+import { getApplications } from "../../store/actions";
+
+import withAuth from "../../hoc/auth/withAuth";
 
 import "./index.scss";
 
-const Applications = props => {
+const Applications = ({ openApplications, closedApplications, dispatch }) => {
   const { user, loading } = useFetchUser({ required: true });
 
   // create or update user profile in the DB
@@ -21,17 +21,8 @@ const Applications = props => {
   // if user refreshes the page and loses the session, state will be empty
   // if so, trigger a side effect to populate the state from the DB
   useEffect(() => {
-    const populateState = async () => {
-      const stateDB = await getApplications();
-
-      // populate state with all applications from DB
-      await props.dispatch(populateApplicationsState(stateDB));
-    };
-    if (
-      props.openApplications.length === 0 &&
-      props.closedApplications.length === 0
-    ) {
-      populateState();
+    if (openApplications.length === 0 && closedApplications.length === 0) {
+      dispatch(getApplications());
     }
     return;
   }, []);
@@ -44,7 +35,7 @@ const Applications = props => {
         }`}</h4>
         <p>
           {" "}
-          {`This is your applications space. You have currently ${props.openApplications.length} open job applications and ${props.closedApplications.length} closed job applications.`}
+          {`This is your applications space. You have currently ${openApplications.length} open job applications and ${closedApplications.length} closed job applications.`}
         </p>
         <p>
           {" "}
@@ -72,15 +63,13 @@ const Applications = props => {
 };
 
 // get applications in DB using getInitialProps to fetch from the DB
-Applications.getInitialProps = async ({ store, isServer }) => {
+Applications.getInitialProps = ({ store, isServer }) => {
   const state = store.getState();
   // only fetch data if store is empty due to a manual refresh on the page
   // which renders server side and therefore doesn't have the user authenticated
   if (state.applications.applications.length === 0 && !isServer) {
-    const stateDB = await getApplications();
-
     // populate state with all applications from DB
-    await store.dispatch(populateApplicationsState(stateDB));
+    store.dispatch(getApplications());
   }
   return store;
 };
