@@ -53,3 +53,12 @@ export const newJobOfferFormFields = [
   { name: "job-offer-date", type: "date", required: true },
   { name: "decision-deadline", type: "date" }
 ];
+
+export default {
+  "application-submitted": newApplicationFormFields,
+  "phone-screening": newPhoneScreeningFormFields,
+  "phone-interview": newPhoneInterviewFormFields,
+  "onsite-interview": newOnSiteInterviewFormFields,
+  "technical-test": newTechnicalTestFormFields,
+  "job-offer": newJobOfferFormFields
+};
