@@ -36,7 +36,6 @@ export default auth0.requireAuthentication(async (req, res) => {
 
   switch (method) {
     case "GET":
-      console.log("getting");
       User.findOneAndUpdate(
         { _id: user.sub },
         userProfile,

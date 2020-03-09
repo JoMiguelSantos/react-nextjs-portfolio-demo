@@ -93,13 +93,13 @@ const index = () => {
           href="https://www.linkedin.com/in/joaomiguelopesantos/"
           target="_blank"
         >
-          <LinkedInIcon fontSize="medium" />
+          <LinkedInIcon />
         </a>{" "}
         <a href="https://github.com/JoMiguelSantos" target="_blank">
-          <GitHubIcon fontSize="medium" />
+          <GitHubIcon />
         </a>{" "}
         <a href="mailto:joaomsglds@gmail.com" target="_top">
-          <MailIcon fontSize="medium" />
+          <MailIcon />
         </a>
       </div>
       <div className="link-back">

@@ -88,6 +88,7 @@ export const form = props => {
         <div className="form__box">
           {input.type === "text-area" ? (
             <TextArea
+              key={input.name}
               htmlFor={input.name}
               label={input.name}
               register={register}
@@ -101,6 +102,7 @@ export const form = props => {
             />
           ) : (
             <Input
+              key={input.name}
               htmlFor={input.name}
               label={input.name}
               register={register}
