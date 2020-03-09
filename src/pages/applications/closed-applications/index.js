@@ -27,6 +27,7 @@ const ClosedApplications = props => {
           application={app}
           isSaving={saving[app.entryId]}
           activeStep={activeSteps[app.entryId]}
+          closedDate={app.closedDate}
         />
       ))
     : null;

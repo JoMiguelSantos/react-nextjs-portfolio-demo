@@ -52,7 +52,11 @@ const toggleApplicationStatus = (state, action) => {
   return updateObject(state, {
     applications: state.applications.map(app => {
       if (app.entryId === action.payload.entryId) {
-        return { ...app, isOpen: action.payload.isOpen };
+        return {
+          ...app,
+          isOpen: action.payload.isOpen,
+          closedDate: action.payload.closedDate
+        };
       }
       return app;
     })

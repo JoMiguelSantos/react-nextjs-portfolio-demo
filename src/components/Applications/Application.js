@@ -22,7 +22,7 @@ import { capitalize } from "../../js.utils";
 
 import "./Application.scss";
 
-const Application = ({ application, activeStep, isSaving }) => {
+const Application = ({ application, activeStep, isSaving, closedDate }) => {
   const [isNewStep, setNewStep] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [currentFormId, setCurrentFormId] = useState();
@@ -142,7 +142,8 @@ const Application = ({ application, activeStep, isSaving }) => {
   const onToggleAppStatusClickHandler = () => {
     const applicationStatusData = {
       isOpen: !application.isOpen,
-      entryId: application.entryId
+      entryId: application.entryId,
+      closedDate: application.isOpen ? new Date() : application.closedDate
     };
     dispatch(patchApplicationStatus(applicationStatusData));
   };
@@ -159,6 +160,8 @@ const Application = ({ application, activeStep, isSaving }) => {
     </div>
   );
 
+  console.log(!!closedDate, application);
+
   const content = (
     <div className="application">
       <div className="application__steps--container">
@@ -172,6 +175,9 @@ const Application = ({ application, activeStep, isSaving }) => {
         </h2>
         <div className="steps">
           <h3 className="application__steps">{steps}</h3>
+          {!!closedDate && (
+            <p className="application__closed-date">{`Closed Date: ${closedDate}`}</p>
+          )}
           {!isNewStep && addNewStepList.length > 0 && application.isOpen && (
             <div
               className="application__new-step"

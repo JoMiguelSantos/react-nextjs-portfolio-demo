@@ -8,7 +8,8 @@ const ApplicationSchema = new Schema({
   title: { type: String, required: true },
   steps: [ApplicationStepSchema],
   isDeleted: { type: Boolean, default: false },
-  isOpen: { type: Boolean, default: true }
+  isOpen: { type: Boolean, default: true },
+  closedDate: Date
 });
 
 // this fixes an error [OverwriteModelError]
