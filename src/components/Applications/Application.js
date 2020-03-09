@@ -160,8 +160,6 @@ const Application = ({ application, activeStep, isSaving, closedDate }) => {
     </div>
   );
 
-  console.log(!!closedDate, application);
-
   const content = (
     <div className="application">
       <div className="application__steps--container">

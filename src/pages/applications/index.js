@@ -106,11 +106,6 @@ const Applications = () => {
     onsiteInterviewOpenApps + onsiteInterviewClosedApps;
   const technicalTestTotal = technicalTestOpenApps + technicalTestClosedApps;
   const jobOfferTotal = jobOfferOpenApps + jobOfferClosedApps;
-  const totalApplications = applications.length;
-  const openApplicationsSubTotal = applications.filter(app => app.isOpen)
-    .length;
-  const closedApplicationsSubTotal = applications.filter(app => !app.isOpen)
-    .length;
 
   return (
     <Layout user={user} loading={loading}>
