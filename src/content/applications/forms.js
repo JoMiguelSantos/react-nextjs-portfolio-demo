@@ -5,6 +5,7 @@ export const newApplicationFormFields = [
   { name: "location", required: true },
   { name: "industry" },
   { name: "source" },
+  { name: "job-link" },
   { name: "description", required: true, type: "text-area" },
   { name: "application-date", required: true, type: "date" },
   { name: "notes", type: "text-area" }

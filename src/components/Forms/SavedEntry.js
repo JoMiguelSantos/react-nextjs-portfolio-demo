@@ -275,6 +275,14 @@ const savedEntry = props => {
       </div>
     ) : null;
 
+  const jobLink =
+    props["job-link"] === "" || props["job-link"] ? (
+      <div className="entry__list--item">
+        <label>Job Link</label>
+        <p>{props["job-link"]}</p>
+      </div>
+    ) : null;
+
   const receivedDate =
     props["received-date"] === "" || props["received-date"] ? (
       <div className="entry__list--item">
@@ -328,6 +336,7 @@ const savedEntry = props => {
       {location}
       {industry}
       {source}
+      {jobLink}
       {applicationDate}
       {interviewerName}
       {interviewTime}

@@ -10,6 +10,7 @@ const ApplicationStepSchema = new Schema({
   benefits: String,
   "decision-deadline": Date,
   "job-offer-date": Date,
+  "job-link": String,
   "company-name": String,
   "job-title": String,
   location: String,
