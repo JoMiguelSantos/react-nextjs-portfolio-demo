@@ -2,7 +2,7 @@ import Layout from "../../layout/Layout";
 
 import { useFetchUser } from "../../lib/auth/user";
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { getApplications } from "../../store/actions";
 
@@ -10,9 +10,10 @@ import withAuth from "../../hoc/auth/withAuth";
 
 import "./index.scss";
 
-const Applications = ({ openApplications, closedApplications, dispatch }) => {
+const Applications = () => {
   const { user, loading } = useFetchUser({ required: true });
-
+  const applications = useSelector(state => state.applications.applications);
+  const dispatch = useDispatch();
   // create or update user profile in the DB
   useEffect(() => {
     fetch("/api/db/applications/updateUserProfile");
@@ -21,11 +22,95 @@ const Applications = ({ openApplications, closedApplications, dispatch }) => {
   // if user refreshes the page and loses the session, state will be empty
   // if so, trigger a side effect to populate the state from the DB
   useEffect(() => {
-    if (openApplications.length === 0 && closedApplications.length === 0) {
+    if (applications.length === 0) {
       dispatch(getApplications());
     }
     return;
   }, []);
+
+  let applicationSubmittedOpenApps = 0;
+  let applicationSubmittedClosedApps = 0;
+  let phoneScreeningOpenApps = 0;
+  let phoneScreeningClosedApps = 0;
+  let phoneInterviewOpenApps = 0;
+  let phoneInterviewClosedApps = 0;
+  let onsiteInterviewOpenApps = 0;
+  let onsiteInterviewClosedApps = 0;
+  let technicalTestOpenApps = 0;
+  let technicalTestClosedApps = 0;
+  let jobOfferOpenApps = 0;
+  let jobOfferClosedApps = 0;
+
+  applications.forEach(app => {
+    app.steps.forEach(step => {
+      switch (app.isOpen) {
+        case true:
+          switch (step.formId) {
+            case "application-submitted":
+              applicationSubmittedOpenApps++;
+              break;
+            case "phone-screening":
+              phoneScreeningOpenApps++;
+              break;
+            case "phone-interview":
+              phoneInterviewOpenApps++;
+              break;
+            case "onsite-interview":
+              onsiteInterviewOpenApps++;
+              break;
+            case "technical-test":
+              technicalTestOpenApps++;
+              break;
+            case "job-offer":
+              jobOfferOpenApps++;
+              break;
+            default:
+              break;
+          }
+          break;
+        case false:
+          switch (step.formId) {
+            case "application-submitted":
+              applicationSubmittedClosedApps++;
+              break;
+            case "phone-screening":
+              phoneScreeningClosedApps++;
+              break;
+            case "phone-interview":
+              phoneInterviewClosedApps++;
+              break;
+            case "onsite-interview":
+              onsiteInterviewClosedApps++;
+              break;
+            case "technical-test":
+              technicalTestClosedApps++;
+              break;
+            case "job-offer":
+              jobOfferClosedApps++;
+              break;
+            default:
+              break;
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  });
+
+  const applicationSubmittedTotal =
+    applicationSubmittedOpenApps + applicationSubmittedClosedApps;
+  const phoneScreeningTotal = phoneScreeningOpenApps + phoneScreeningClosedApps;
+  const phoneInterviewTotal = phoneInterviewOpenApps + phoneInterviewClosedApps;
+  const onsiteInterviewTotal =
+    onsiteInterviewOpenApps + onsiteInterviewClosedApps;
+  const technicalTestTotal = technicalTestOpenApps + technicalTestClosedApps;
+  const jobOfferTotal = jobOfferOpenApps + jobOfferClosedApps;
+  const totalApplications = applications.length;
+  const openApplicationsSubTotal = applications.filter(app => app.isOpen)
+    .length;
+  const closedApplicationsSubTotal = applications.filter(app => !app.isOpen)
+    .length;
 
   return (
     <Layout user={user} loading={loading}>
@@ -35,8 +120,60 @@ const Applications = ({ openApplications, closedApplications, dispatch }) => {
         }`}</h4>
         <p>
           {" "}
-          {`This is your applications space. You have currently ${openApplications.length} open job applications and ${closedApplications.length} closed job applications.`}
+          {`This is your applications space.`}
+          <br />
+          {`Here's some stats about your applications:`} <br />
         </p>
+        <div>
+          <table className="applications__stats">
+            <thead>
+              <tr>
+                <th>Steps</th>
+                <th>Open Applications</th>
+                <th>Closed Applications</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Application Submitted</td>
+                <td>{applicationSubmittedOpenApps}</td>
+                <td>{applicationSubmittedClosedApps}</td>
+                <td>{applicationSubmittedTotal}</td>
+              </tr>
+              <tr>
+                <td>Phone Screening</td>
+                <td>{phoneScreeningOpenApps}</td>
+                <td>{phoneScreeningClosedApps}</td>
+                <td>{phoneScreeningTotal}</td>
+              </tr>
+              <tr>
+                <td>Phone Interview</td>
+                <td>{phoneInterviewOpenApps}</td>
+                <td>{phoneInterviewClosedApps}</td>
+                <td>{phoneInterviewTotal}</td>
+              </tr>
+              <tr>
+                <td>Onsite Interview</td>
+                <td>{onsiteInterviewOpenApps}</td>
+                <td>{onsiteInterviewClosedApps}</td>
+                <td>{onsiteInterviewTotal}</td>
+              </tr>
+              <tr>
+                <td>Technical Test</td>
+                <td>{technicalTestOpenApps}</td>
+                <td>{technicalTestClosedApps}</td>
+                <td>{technicalTestTotal}</td>
+              </tr>
+              <tr>
+                <td>Job Offer</td>
+                <td>{jobOfferOpenApps}</td>
+                <td>{jobOfferClosedApps}</td>
+                <td>{jobOfferTotal}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
           {" "}
           You can hover over all navigation menu items but you can only switch
@@ -74,14 +211,4 @@ Applications.getInitialProps = ({ store, isServer }) => {
   return store;
 };
 
-const mapStateToProps = state => {
-  return {
-    //props.applications: state/reducer/key
-    openApplications: state.applications.applications.filter(app => app.isOpen),
-    closedApplications: state.applications.applications.filter(
-      app => !app.isOpen
-    )
-  };
-};
-
-export default connect(mapStateToProps, null)(withAuth(Applications));
+export default withAuth(Applications);

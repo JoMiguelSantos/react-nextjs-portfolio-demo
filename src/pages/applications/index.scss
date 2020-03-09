@@ -11,3 +11,35 @@
 .mail-me {
   padding: 0.1rem;
 }
+
+.applications__stats {
+  text-align: center;
+}
+
+thead {
+  background-color: $secondary-dark;
+  color: $primary-light;
+}
+
+tbody {
+  background-color: #cececef6;
+}
+
+th {
+  padding: 0 1rem;
+}
+
+td {
+  padding: 0 0.2rem;
+}
+
+td:first-child {
+  color: $primary;
+  font-weight: 700;
+}
+
+td:not(:first-child) {
+  color: $secondary-dark;
+  font-weight: 700;
+  padding: 0 3rem;
+}
