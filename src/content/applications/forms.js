@@ -41,6 +41,15 @@ export const newTechnicalTestFormFields = [
   { name: "notes" }
 ];
 
+export const newTechnicalInterviewFormFields = [
+  { name: "test-type" },
+  { name: "test-subjects" },
+  { name: "interviewer-name" },
+  { name: "interview-time", type: "datetime-local", required: true },
+  { name: "duration-in-minutes", type: "number" },
+  { name: "notes" }
+];
+
 export const newJobOfferFormFields = [
   {
     name: "salary-gross-per-year",
@@ -61,5 +70,6 @@ export default {
   "phone-interview": newPhoneInterviewFormFields,
   "onsite-interview": newOnSiteInterviewFormFields,
   "technical-test": newTechnicalTestFormFields,
+  "technical-interview": newTechnicalInterviewFormFields,
   "job-offer": newJobOfferFormFields
 };
