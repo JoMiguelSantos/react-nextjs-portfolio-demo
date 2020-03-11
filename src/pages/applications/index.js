@@ -1,4 +1,5 @@
 import Layout from "../../layout/Layout";
+import Spinner from "../../components/Spinner/Spinner";
 
 import { useFetchUser } from "../../lib/auth/user";
 import React, { useEffect } from "react";
@@ -13,6 +14,7 @@ import "./index.scss";
 const Applications = () => {
   const { user, loading } = useFetchUser({ required: true });
   const applications = useSelector(state => state.applications.applications);
+  const isLoading = useSelector(state => state.applications.fetching);
   const dispatch = useDispatch();
   // create or update user profile in the DB
   useEffect(() => {
@@ -38,6 +40,8 @@ const Applications = () => {
   let onsiteInterviewClosedApps = 0;
   let technicalTestOpenApps = 0;
   let technicalTestClosedApps = 0;
+  let technicalInterviewOpenApps = 0;
+  let technicalInterviewClosedApps = 0;
   let jobOfferOpenApps = 0;
   let jobOfferClosedApps = 0;
 
@@ -60,6 +64,9 @@ const Applications = () => {
               break;
             case "technical-test":
               technicalTestOpenApps++;
+              break;
+            case "technical-interview":
+              technicalInterviewOpenApps++;
               break;
             case "job-offer":
               jobOfferOpenApps++;
@@ -85,6 +92,9 @@ const Applications = () => {
             case "technical-test":
               technicalTestClosedApps++;
               break;
+            case "technical-interview":
+              technicalInterviewClosedApps++;
+              break;
             case "job-offer":
               jobOfferClosedApps++;
               break;
@@ -105,8 +115,66 @@ const Applications = () => {
   const onsiteInterviewTotal =
     onsiteInterviewOpenApps + onsiteInterviewClosedApps;
   const technicalTestTotal = technicalTestOpenApps + technicalTestClosedApps;
+  const technicalInterviewTotal =
+    technicalInterviewOpenApps + technicalInterviewClosedApps;
   const jobOfferTotal = jobOfferOpenApps + jobOfferClosedApps;
 
+  const statsTable = (
+    <table className="applications__stats">
+      <thead>
+        <tr>
+          <th>Steps</th>
+          <th>Open Applications</th>
+          <th>Closed Applications</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Application Submitted</td>
+          <td>{applicationSubmittedOpenApps}</td>
+          <td>{applicationSubmittedClosedApps}</td>
+          <td>{applicationSubmittedTotal}</td>
+        </tr>
+        <tr>
+          <td>Technical Test</td>
+          <td>{technicalTestOpenApps}</td>
+          <td>{technicalTestClosedApps}</td>
+          <td>{technicalTestTotal}</td>
+        </tr>
+        <tr>
+          <td>Technical Interview</td>
+          <td>{technicalInterviewOpenApps}</td>
+          <td>{technicalInterviewClosedApps}</td>
+          <td>{technicalInterviewTotal}</td>
+        </tr>
+        <tr>
+          <td>Phone Screening</td>
+          <td>{phoneScreeningOpenApps}</td>
+          <td>{phoneScreeningClosedApps}</td>
+          <td>{phoneScreeningTotal}</td>
+        </tr>
+        <tr>
+          <td>Phone Interview</td>
+          <td>{phoneInterviewOpenApps}</td>
+          <td>{phoneInterviewClosedApps}</td>
+          <td>{phoneInterviewTotal}</td>
+        </tr>
+        <tr>
+          <td>Onsite Interview</td>
+          <td>{onsiteInterviewOpenApps}</td>
+          <td>{onsiteInterviewClosedApps}</td>
+          <td>{onsiteInterviewTotal}</td>
+        </tr>
+        <tr>
+          <td>Job Offer</td>
+          <td>{jobOfferOpenApps}</td>
+          <td>{jobOfferClosedApps}</td>
+          <td>{jobOfferTotal}</td>
+        </tr>
+      </tbody>
+    </table>
+  );
   return (
     <Layout user={user} loading={loading}>
       <div className="introduction">
@@ -119,56 +187,7 @@ const Applications = () => {
           <br />
           {`Here's some stats about your applications:`} <br />
         </p>
-        <div>
-          <table className="applications__stats">
-            <thead>
-              <tr>
-                <th>Steps</th>
-                <th>Open Applications</th>
-                <th>Closed Applications</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Application Submitted</td>
-                <td>{applicationSubmittedOpenApps}</td>
-                <td>{applicationSubmittedClosedApps}</td>
-                <td>{applicationSubmittedTotal}</td>
-              </tr>
-              <tr>
-                <td>Phone Screening</td>
-                <td>{phoneScreeningOpenApps}</td>
-                <td>{phoneScreeningClosedApps}</td>
-                <td>{phoneScreeningTotal}</td>
-              </tr>
-              <tr>
-                <td>Phone Interview</td>
-                <td>{phoneInterviewOpenApps}</td>
-                <td>{phoneInterviewClosedApps}</td>
-                <td>{phoneInterviewTotal}</td>
-              </tr>
-              <tr>
-                <td>Onsite Interview</td>
-                <td>{onsiteInterviewOpenApps}</td>
-                <td>{onsiteInterviewClosedApps}</td>
-                <td>{onsiteInterviewTotal}</td>
-              </tr>
-              <tr>
-                <td>Technical Test</td>
-                <td>{technicalTestOpenApps}</td>
-                <td>{technicalTestClosedApps}</td>
-                <td>{technicalTestTotal}</td>
-              </tr>
-              <tr>
-                <td>Job Offer</td>
-                <td>{jobOfferOpenApps}</td>
-                <td>{jobOfferClosedApps}</td>
-                <td>{jobOfferTotal}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div>{isLoading["applications"] ? <Spinner /> : statsTable}</div>
         <p>
           {" "}
           You can hover over all navigation menu items but you can only switch

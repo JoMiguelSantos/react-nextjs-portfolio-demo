@@ -34,8 +34,9 @@ td {
 }
 
 td:first-child {
-  color: $primary;
+  color: $primary-dark;
   font-weight: 700;
+  background-color: #b4b4b4f6;
 }
 
 td:not(:first-child) {
