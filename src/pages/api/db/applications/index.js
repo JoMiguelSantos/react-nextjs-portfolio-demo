@@ -71,10 +71,8 @@ export default auth0.requireAuthentication(async (req, res) => {
       delete application.entryId;
       // patch all present keys except "steps" which will be handled separately
       for (let key in application) {
-        if (applicationDB[key] !== "steps")
-          applicationDB[key] = application[key];
+        if (key !== "steps") applicationDB[key] = application[key];
       }
-
       if (application.steps && application.steps.length > 0) {
         //get the keys of the steps that need change
         const stepsToChange = application.steps.map(step => step.formId);

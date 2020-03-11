@@ -133,12 +133,15 @@ export const patchApplicationEntry = application => {
     })
       .then(checkStatus)
       .then(r => r.json())
-      .then(r => {
+      .then(res => {
+        if (res.error) {
+          throw res.error;
+        }
         batch(() => {
           dispatch(
             activeStep({ [application.entryId]: "application-submitted" })
           );
-          dispatch(editApplicationEntry(application));
+          dispatch(editApplicationEntry(res));
           dispatch(isSaving({ [application.entryId]: false }));
         });
       });

@@ -5,7 +5,7 @@ import stepsList from "../../../content/applications/forms";
 import {
   putApplicationStep,
   deleteApplicationStep,
-  putApplicationEntry
+  patchApplicationEntry
 } from "../../../store/actions";
 
 import { useState } from "react";
@@ -31,7 +31,7 @@ const StepItem = ({ step, entryId, isOpen }) => {
         steps: [applicationStepData]
       };
 
-      dispatch(putApplicationEntry(applicationData));
+      dispatch(patchApplicationEntry(applicationData));
     } else {
       dispatch(
         putApplicationStep({
