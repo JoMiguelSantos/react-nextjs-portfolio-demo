@@ -3,7 +3,7 @@ import fetch from "isomorphic-unfetch";
 import { checkStatus } from "../../js.utils";
 import { batch } from "react-redux";
 
-const hostname = "http://localhost:3000";
+const hostname = "https://reshaped-demo.now.sh";
 
 //// UTILS
 export const isFetching = application => {

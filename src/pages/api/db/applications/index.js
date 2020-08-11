@@ -24,7 +24,7 @@ export default auth0.requireAuthentication(async (req, res) => {
       : null;
 
   // enable defaults and return new updated document
-  const options = { new: true, setDefaultsOnInsert: true };
+  const options = { new: true, setDefaultsOnInsert: true, runValidators: true };
 
   const callback = (error, application) => {
     if (error) {
@@ -75,13 +75,13 @@ export default auth0.requireAuthentication(async (req, res) => {
       }
       if (application.steps && application.steps.length > 0) {
         //get the keys of the steps that need change
-        const stepsToChange = application.steps.map(step => step.formId);
-        applicationDB.steps.forEach(DBstep => {
+        const stepsToChange = application.steps.map((step) => step.formId);
+        applicationDB.steps.forEach((DBstep) => {
           // if part of the steps to change
           if (stepsToChange.includes(DBstep.formId)) {
             // replace each property in DBstep with value on request step
             for (let [key, value] of Object.entries(
-              application.steps.find(step => step.formId === DBstep.formId)
+              application.steps.find((step) => step.formId === DBstep.formId)
             )) {
               DBstep[key] = value;
             }
